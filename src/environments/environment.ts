@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiKey: 'fc2726ff03a24560a9c1a7362e820fcd',
+  url: 'https://api.sportsdata.io/v3/cbb/scores/json'
 };
 
 /*
