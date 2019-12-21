@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if ( request.url.indexOf('sportsdata') > -1 ) {
+        if ( request.url.indexOf('https://api.sportsdata.io') > -1 ) {
             const apiKey = environment.apiKey;
             request = request.clone({
                 setHeaders: {

@@ -12,7 +12,8 @@ export class SportDataService {
   constructor(private http: HttpClient) { }
 
   getTeams() {
-    return this.http.get( `${ this.url }/teams` );
+    // return this.http.get( `${ this.url }/teams` );
+    return this.http.get( 'https://api.sportsdata.io/v3/cbb/scores/json/teams' );
   }
 
   getGamesDay( date: Date ) {
@@ -21,8 +22,8 @@ export class SportDataService {
   }
 
   getSchedules() {
-    return this.http.get( '../assets/data.json' );
-    // return this.http.get( `${this.url}/Games/2020REG` );
+    // return this.http.get( '../assets/data.json' );
+    return this.http.get( `${this.url}/Games/2020REG` );
   }
 
 
