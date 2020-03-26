@@ -17,7 +17,8 @@ export class SportDataService {
   }
 
   getGamesDay( date: Date ) {
-    const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
+    // const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
+    const formatDate = '2020-MAR-01';
     return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
   }
 
