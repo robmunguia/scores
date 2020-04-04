@@ -1,4 +1,4 @@
-<!-- <h1 class="h3 mb-4 text-gray-800">Blank Page <i class="fa fa-car"></i></h1> -->
+
 <div class="row">
     <div class="col-6">
         <div class="btn-group margenes" role="group" aria-label="Basic example">
@@ -18,22 +18,46 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Home</th>
-                    <th class="text-center">Away</th>
                     <th></th>
+                    <th class="text-center">Away</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let game of games">
                     <td>
-                        <img class="team-logo" [src]="getTeam( game.HomeTeamID ).TeamLogoUrl" alt="SMU"> {{ getTeam( game.HomeTeamID ).School }} ( {{ getTeam( game.HomeTeamID ).Wins }} - {{ getTeam( game.HomeTeamID ).Losses }} )
+                        <div>
+                            ( {{ getTeam( game.HomeTeamID ).Wins }} - {{ getTeam( game.HomeTeamID ).Losses }} )
+                        </div>
+                        <div>
+                            <img class="team-logo" [src]="getTeam( game.HomeTeamID ).TeamLogoUrl" alt="SMU">
+                            {{ getTeam( game.HomeTeamID ).School }}
+                        </div>
+                        <div>
+                            {{ game.resultHome | number }}
+                        </div>
+                        <div>
+                            <span>{{ game.resultHome - game.resultAway | number }}</span> &nbsp;
+                            <span class="odds">{{ game.PointSpread | number }}</span>                            
+                        </div>
                     </td>
                     <td>
-                        <img class="team-logo" [src]="getTeam( game.AwayTeamID ).TeamLogoUrl" alt="SMU"> {{ getTeam( game.AwayTeamID ).School }} ( {{ getTeam( game.AwayTeamID ).Wins }} - {{ getTeam( game.AwayTeamID ).Losses }} )
+                        <div><span>{{ game.resultHome + game.resultAway | number }}</span></div>
+                        <div><span class="odds"> {{ game.OverUnder }} </span></div>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm" (click)="calculateGame( game.HomeTeamID, game.AwayTeamID )">
-                            <i class="fa fa-bars"></i>
-                        </button>
+                    <td class="rigt-panel">
+                        <div>
+                            ( {{ getTeam( game.AwayTeamID ).Wins }} - {{ getTeam( game.AwayTeamID ).Losses }} )
+                        </div>
+                        <div>
+                            <img class="team-logo" [src]="getTeam( game.AwayTeamID ).TeamLogoUrl" alt="SMU">
+                            {{ getTeam( game.AwayTeamID ).School }}
+                        </div>
+                        <div>
+                            {{ game.resultAway | number }}
+                        </div>
+                        <div>
+                            {{ game.resultAway - game.resultHome | number }}
+                        </div>
                     </td>
                 </tr>
             </tbody>

@@ -8,3 +8,9 @@
     float: none;
     margin: auto;
 }
+.odds {
+    color: red;
+}
+.rigt-panel {
+    float: right;
+}
