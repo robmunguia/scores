@@ -30,7 +30,7 @@
                         </div>
                         <div>
                             <img class="team-logo" [src]="getTeam( game.HomeTeamID ).TeamLogoUrl" alt="SMU">
-                            {{ getTeam( game.HomeTeamID ).School }}
+                            {{ getTeam( game.HomeTeamID ).School.length > 11 ? getTeam( game.HomeTeamID ).Key : getTeam( game.HomeTeamID ).School }}
                         </div>
                         <div>
                             {{ game.resultHome | number }}
