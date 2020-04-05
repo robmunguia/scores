@@ -9,11 +9,13 @@ import { PagesRouteModule } from './pages.routes';
 // Componentes
 import { PagesComponent } from './pages.component';
 import { GamesComponent } from './games/games.component';
+import { LeaguesComponent } from './leagues/leagues.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
-    GamesComponent
+    GamesComponent,
+    LeaguesComponent
   ],
   imports: [
     CommonModule,
