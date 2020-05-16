@@ -17,14 +17,13 @@ export class SportDataService {
   }
 
   getGamesDay( date: Date ) {
-    // const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
-    const formatDate = '2020-MAR-06';
-    return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
+    return this.http.get( 'http://api.sportradar.us/ncaamb/trial/v7/en/games/2020/03/06/schedule.json?api_key=dxrnhbz26mwke439dfsz7stu');
   }
 
   getSchedules() {
     // return this.http.get( '../assets/data.json' );
-    return this.http.get( `${this.url}/Games/2020REG` );
+    // return this.http.get( `${this.url}/Games/2020REG` );
+    return this.http.get('http://api.sportradar.us/ncaamb/trial/v7/en/games/2019/REG/schedule.json?api_key=dxrnhbz26mwke439dfsz7stu');
   }
 
 

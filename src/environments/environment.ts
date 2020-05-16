@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   apiKey: 'fc2726ff03a24560a9c1a7362e820fcd',
-  url: 'https://api.sportsdata.io/v3/cbb/scores/json'
+  apiKey2: '',
+  url: 'https://api.sportsdata.io/v3/cbb/scores/json',
+  url2: 'http://api.sportradar.us/ncaamb/trial/v7/en/games/2020/03/06/schedule.json?api_key=dxrnhbz26mwke439dfsz7stu',
 };
 
 /*

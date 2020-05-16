@@ -1,26 +1,22 @@
-import { Periods } from './periods.model';
 
 export class Games {
     constructor(
-        public GameId: number = 0,
-        public Season: number = 0,
-        public Status: string = '',
-        public Day: Date = new Date(),
-        public DateTime: Date = new Date(),
-        public AwayTeam: string = '',
-        public HomeTeam: string = '',
-        public AwayTeamID: number = 0,
-        public HomeTeamID: number = 0,
-        public AwayTeamScore: number = 0,
-        public HomeTeamScore: number = 0,
-        public PointSpread: number = 0,
-        public OverUnder: number = 0,
-        public AwayTeamMoneyLine: number = 0,
-        public HomeTeamMoneyLine: number = 0,
-        public IsClosed: boolean = false,
-        // tslint:disable-next-line: no-shadowed-variable
-        public Periods: Periods[] = null,
+        public id: string = '',
+        public status: string = '',
+        public scheduled: Date = new Date(),
+        public home_points: number = 0,
+        public away_points: number = 0,
+        public home: Team = null,
+        public away: Team = null,
+
+        // to calculate the average
         public resultHome: number = 0,
         public resultAway: number = 0,
     ) { }
+}
+
+interface Team {
+    name: string;
+    alias: string;
+    id: string;
 }

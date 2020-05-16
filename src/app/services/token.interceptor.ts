@@ -18,6 +18,13 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             });
         }
+        // else if ( request.url.indexOf('api.sportradar.us') > -1 ) {
+        //     request = request.clone({
+        //         setHeaders: {
+        //             'Access-Control-Allow-Origin': 'http://localhost:4600'
+        //         }
+        //     });
+        // }
         return next.handle(request);
     }
 }
