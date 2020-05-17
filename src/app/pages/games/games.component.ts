@@ -19,6 +19,10 @@ export class GamesComponent implements OnInit {
   date: Date = new Date();
   valueDay = 0;
   gameId = 0;
+  homeScore = 0;
+  awayScore = 0;
+  homeGames: Games[] = [];
+  awayGames: Games[] = [];
 
   constructor(public dataService: SportDataService) {
     this.getShedules();
@@ -27,7 +31,6 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     this.getTeams();
     this.getGames();
-    // this.getShedules();
   }
 
   changeDate( x: number ) {
@@ -64,16 +67,21 @@ export class GamesComponent implements OnInit {
       .subscribe((data: Games[]) => {
         this.loading = false;
         this.schedules = data;
-        this.calculateAll();
+        // this.calculateAll();
       });
     }
   }
 
+  calculate(homeId, awayId) {
+    this.analyzeGames( homeId, true );
+    this.analyzeGames( awayId, false );
+  }
+
   calculateAll() {
-    this.games.forEach((item) => {
-      item.resultHome = this.analyzeGames( item.HomeTeamID );
-      item.resultAway = this.analyzeGames( item.AwayTeamID );
-    });
+    // this.games.forEach((item) => {
+    //   item.resultHome = this.analyzeGames( item.HomeTeamID );
+    //   item.resultAway = this.analyzeGames( item.AwayTeamID );
+    // });
   }
 
   getTeams() {
@@ -102,7 +110,7 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  analyzeGames( teamId: number ): number {
+  analyzeGames( teamId: number, home: boolean ): number {
     const homeGames: Games[] = [];
     for ( const item of this.schedules.filter( g => g.HomeTeamID === teamId && g.IsClosed)) {
       homeGames.push( item );
@@ -118,13 +126,65 @@ export class GamesComponent implements OnInit {
     let totalScores = 0;
     for ( let i = 0; i < 5; i++ ) {
       this.gameId = homeGames[i].GameId;
-      if (homeGames[i].HomeTeamID === teamId) {
-        totalScores += homeGames[i].HomeTeamScore;
-      } else {
-        totalScores += homeGames[i].AwayTeamScore;
-      }
+      const gameDate = new Date(homeGames[i].DateTime);
+      this.getGameScore( gameDate, teamId, home );
     }
     return totalScores / 5;
+  }
+
+  // corrects scores
+  getPeriods( game: Games ) {
+    let juegos: Games[] = [];
+    // juegos = this.getGameScore( game );
+    console.log(juegos);
+  }
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=> {
+      
+    });
+  }
+
+  getGameScore( gameDate: Date, teamId: number, isHome: boolean ) {
+    let score = 0;
+    return new Promise<Games[]>( resolve => {
+      this.dataService.getGamesDayPeriods( new Date(gameDate) )
+      .subscribe((resp: Games[]) => {
+        console.log(resp);
+        let game;
+        const home: Games = resp.filter(g => g.HomeTeamID === teamId)[0];
+        const away: Games = resp.filter(g => g.AwayTeamID === teamId)[0];
+        if ( home ) {
+          home.Periods.forEach(item => {
+            score += item.HomeScore;
+          });
+          this.pushGame( isHome, home );
+        }
+        if ( away ) {
+          away.Periods.forEach(item => {
+            score += item.AwayScore;
+          });
+          this.pushGame( isHome, home );
+        }
+        if (isHome) {
+          // this.homeGames.push( game );
+          // this.homeGames[this.homeGames.length - 1].resultHome += score;
+          this.homeScore += score;
+        } else {
+          // this.awayGames.push( game );
+          // this.awayGames[this.awayGames.length - 1].resultAway += score;
+          this.awayScore += score;
+        }
+      });
+    });
+  }
+
+  pushGame( isHome: boolean, game: Games) {
+    if (isHome) {
+      this.homeGames.push( game );
+    } else {
+      this.awayGames.push( game );
+    }
   }
 
 }

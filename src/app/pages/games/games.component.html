@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="col-6 text-right">
-        <span>{{ displayDate() }}</span>
+        <span>{{ displayDate( 0 ) }}</span>
     </div>
 </div>
 <hr />
@@ -20,6 +20,7 @@
                     <th class="text-center">Home</th>
                     <th></th>
                     <th class="text-center">Away</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +34,7 @@
                             {{ getTeam( game.HomeTeamID ).School.length > 11 ? getTeam( game.HomeTeamID ).Key : getTeam( game.HomeTeamID ).School }}
                         </div>
                         <div>
-                            {{ game.resultHome | number }}
+                            {{ (homeScore / 5) | number }}
                         </div>
                         <div>
                             <span>{{ game.resultHome - game.resultAway | number }}</span> &nbsp;
@@ -53,11 +54,16 @@
                             {{ getTeam( game.AwayTeamID ).School }}
                         </div>
                         <div>
-                            {{ game.resultAway | number }}
+                            {{ (awayScore / 5) | number }}
                         </div>
                         <div>
                             {{ game.resultAway - game.resultHome | number }}
                         </div>
+                    </td>
+                    <td>
+                        <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game.HomeTeamID, game.AwayTeamID )">
+                            <i class="fa fa-bars"></i>
+                        </button>
                     </td>
                 </tr>
             </tbody>
