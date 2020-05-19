@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let game of games">
+                <tr *ngFor="let game of games; let i = index">
                     <td>
                         <div>
                             ( {{ getTeam( game.HomeTeamID ).Wins }} - {{ getTeam( game.HomeTeamID ).Losses }} )
@@ -34,15 +34,17 @@
                             {{ getTeam( game.HomeTeamID ).School.length > 11 ? getTeam( game.HomeTeamID ).Key : getTeam( game.HomeTeamID ).School }}
                         </div>
                         <div>
-                            {{ (homeScore / 5) | number }}
+                            <span *ngIf="i === rowCalculate">
+                                {{ (homeScore / 5) | number }}
+                            </span>
                         </div>
                         <div>
-                            <span>{{ game.resultHome - game.resultAway | number }}</span> &nbsp;
+                            <span *ngIf="i === rowCalculate">{{ (homeScore - awayScore) / 5 | number }}</span> &nbsp;
                             <span class="odds">{{ game.PointSpread | number }}</span>                            
                         </div>
                     </td>
                     <td>
-                        <div><span>{{ game.resultHome + game.resultAway | number }}</span></div>
+                        <div><span *ngIf="i === rowCalculate">{{ (homeScore + awayScore) / 5 | number }}</span></div>
                         <div><span class="odds"> {{ game.OverUnder }} </span></div>
                     </td>
                     <td class="rigt-panel">
@@ -54,15 +56,17 @@
                             {{ getTeam( game.AwayTeamID ).School }}
                         </div>
                         <div>
-                            {{ (awayScore / 5) | number }}
+                            <span *ngIf="i === rowCalculate">
+                                {{ (awayScore / 5) | number }}
+                            </span>
                         </div>
-                        <div>
-                            {{ game.resultAway - game.resultHome | number }}
+                        <div *ngIf="i === rowCalculate">
+                            {{ (awayScore - homeScore) / 5 | number }}
                         </div>
                     </td>
-                    <td>
-                        <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game.HomeTeamID, game.AwayTeamID )">
-                            <i class="fa fa-bars"></i>
+                    <td style="text-align: right;">
+                        <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate(i, game.HomeTeamID, game.AwayTeamID )">
+                            <i class="fa fa-calculator"></i>
                         </button>
                     </td>
                 </tr>
