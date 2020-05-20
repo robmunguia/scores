@@ -13,16 +13,13 @@ export class GamesComponent implements OnInit {
   games: Games[] = null;
   schedules: Games[] = null;
   teams: Team[] = null;
+  divider: number = 5;
   // variable
-  rowCalculate: number = -1;
   loading: boolean = false;
   date: Date = new Date();
   valueDay = 0;
   gameId = 0;
-  totalScore: number = 0;
-  diffScore: number = 0;
-  homeScore: number = 0;
-  awayScore: number = 0;
+  // homeScore: number = 0;
   homeGames: Games[] = [];
   awayGames: Games[] = [];
 
@@ -74,14 +71,13 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  calculate(index, homeId, awayId) {
-    this.rowCalculate = index;
+  calculate(game: Games) {
     this.homeGames = [];
     this.awayGames = [];
-    this.homeScore = 0;
-    this.awayScore = 0;
-    this.analyzeGames( homeId, true );
-    this.analyzeGames( awayId, false );
+    game.resultHome = 0;
+    game.resultAway = 0;
+    this.analyzeGames(game, game.HomeTeamID, true );
+    this.analyzeGames(game, game.AwayTeamID, false );
   }
 
   calculateAll() {
@@ -117,7 +113,7 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  analyzeGames( teamId: number, home: boolean ) {
+  analyzeGames(game: Games, teamId: number, home: boolean ) {
     const homeGames: Games[] = [];
     for ( const item of this.schedules.filter( g => g.HomeTeamID === teamId && g.IsClosed)) {
       homeGames.push( item );
@@ -133,11 +129,11 @@ export class GamesComponent implements OnInit {
     for ( let i = 0; i < 5; i++ ) {
       this.gameId = homeGames[i].GameId;
       const gameDate = new Date(homeGames[i].DateTime);
-      this.getGameScore( gameDate, teamId, home );
+      this.getGameScore(game, gameDate, teamId, home );
     }
   }
 
-  getGameScore( gameDate: Date, teamId: number, isHome: boolean ) {
+  getGameScore(game: Games, gameDate: Date, teamId: number, isHome: boolean ) {
     return new Promise<Games[]>( resolve => {
       this.dataService.getGamesDayPeriods( new Date(gameDate) )
       .subscribe((resp: Games[]) => {
@@ -148,9 +144,9 @@ export class GamesComponent implements OnInit {
           home.Periods.forEach(item => {
             if ( item.Name === '1' || item.Name === '2') {
               if (isHome) {
-                this.homeScore += item.HomeScore;
+                game.resultHome += item.HomeScore;
               } else {
-                this.awayScore += item.HomeScore;
+                game.resultAway += item.HomeScore;
               }
             }
           });
@@ -158,9 +154,9 @@ export class GamesComponent implements OnInit {
           away.Periods.forEach(item => {
             if ( item.Name === '1' || item.Name === '2') {
               if ( isHome ) {
-                this.homeScore += item.AwayScore;
+                game.resultHome += item.HomeScore;
               } else {
-                this.awayScore += item.AwayScore;
+                game.resultAway += item.HomeScore;
               }
             }
           });
@@ -174,27 +170,9 @@ export class GamesComponent implements OnInit {
   pushGame( isHome: boolean, game: Games) {
     if (isHome) {
       this.homeGames.push( game );
-      console.log(this.homeGames);
     } else {
       this.awayGames.push( game );
-      console.log(this.awayGames);
     }
   }
-
-  // calculateTotals() {
-  //   if ( this.homeGames.length === 5 && this.awayGames.length === 5 ) {
-  //     this.totalScore = 0;
-  //     this.totalScore = (this.homeScore + this.awayScore);
-  //     this.diffScore = 0;
-  //     this.diffScore = (this.awayScore - this.homeScore);;
-  //   }
-  // }
-
-  // async delay(ms: number) {
-  //   await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=> {
-  //     // calculate the correct values
-  //     this.calculateTotals();      
-  //   });
-  // }
 
 }
