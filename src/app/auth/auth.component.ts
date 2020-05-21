@@ -19,8 +19,6 @@ export class AuthComponent implements OnInit {
   }
 
   signIn() {
-    this.email = 'rmunguia@teammiklo.com';
-    this.password = 'Rmun2030';
     this.authService.SignIn(this.email, this.password)
       .then(() => {
         this.router.navigate(['/']);
