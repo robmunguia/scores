@@ -21,6 +21,10 @@ export class SportDataService {
     const formatDate = '2020-MAR-06';
     return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
   }
+  getGamesDayPeriods( date: Date ) {
+    const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
+    return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
+  }
 
   getSchedules() {
     // return this.http.get( '../assets/data.json' );
