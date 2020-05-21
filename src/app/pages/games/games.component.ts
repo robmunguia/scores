@@ -95,7 +95,6 @@ export class GamesComponent implements OnInit {
       .subscribe((resp: Team[]) => {
         this.teams = resp;
         localStorage.setItem('teams', JSON.stringify(this.teams));
-        console.log(this.teams);
       });
     }
   }
@@ -108,7 +107,6 @@ export class GamesComponent implements OnInit {
       .subscribe((resp: Games[]) => {
         this.games = resp;
         localStorage.setItem('games', JSON.stringify(this.games));
-        console.log(this.games);
       });
     }
   }

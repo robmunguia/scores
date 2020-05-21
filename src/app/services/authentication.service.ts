@@ -8,39 +8,58 @@ import { Observable } from 'rxjs';
 
 export class AuthenticationService {
   userData: Observable<firebase.User>;
+  isLogin: boolean = false;
 
   constructor(private angularFireAuth: AngularFireAuth) {
+    this.loadStorage();
     this.userData = angularFireAuth.authState;
+  }
+
+  isAuthenticated(): boolean {
+    return this.isLogin;
   }
 
   /* Sign up */
   SignUp(email: string, password: string) {
-    this.angularFireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('Successfully signed up!', res);
-      })
-      .catch(error => {
-        console.log('Something is wrong:', error.message);
-      });
+    return this.angularFireAuth.createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      return user;
+    })
+    .catch(error => {
+      throw error
+    });
   }
 
   /* Sign in */
   SignIn(email: string, password: string) {
-    this.angularFireAuth
-      .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('Successfully signed in!');
-      })
-      .catch(err => {
-        console.log('Something is wrong:',err.message);
-      });
+    return this.angularFireAuth.signInWithEmailAndPassword(email, password)
+    .then((data) => {
+      this.isLogin = true;
+      this.saveStorage( data.user.email );
+      return data;
+    })
+    .catch(error => {
+      throw error;
+    });
   }
 
   /* Sign out */
   SignOut() {
-    this.angularFireAuth
-      .signOut();
+    this.isLogin = false;
+    localStorage.removeItem('email');
+    this.angularFireAuth.signOut();
+  }
+
+  saveStorage( email: string ) {
+    localStorage.setItem('email', email);
+  }
+
+  loadStorage() {
+    if ( localStorage.getItem('email') ) {
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
   }
 
 }
