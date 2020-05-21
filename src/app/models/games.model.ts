@@ -19,6 +19,8 @@ export class Games {
         public HomeTeamMoneyLine: number = 0,
         public IsClosed: boolean = false,
         // tslint:disable-next-line: no-shadowed-variable
-        public Periods: Periods[] = null
+        public Periods: Periods[] = null,
+        public resultHome: number = null,
+        public resultAway: number = null,
     ) { }
 }

@@ -1,4 +1,4 @@
-<!-- <h1 class="h3 mb-4 text-gray-800">Blank Page <i class="fa fa-car"></i></h1> -->
+
 <div class="row">
     <div class="col-6">
         <div class="btn-group margenes" role="group" aria-label="Basic example">
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="col-6 text-right">
-        <span>{{ displayDate() }}</span>
+        <span>{{ displayDate( 0 ) }}</span>
     </div>
 </div>
 <hr />
@@ -18,21 +18,55 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Home</th>
+                    <th></th>
                     <th class="text-center">Away</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let game of games">
+                <tr *ngFor="let game of games; let i = index">
                     <td>
-                        <img class="team-logo" [src]="getTeam( game.HomeTeamID ).TeamLogoUrl" alt="SMU"> {{ getTeam( game.HomeTeamID ).School }} ( {{ getTeam( game.HomeTeamID ).Wins }} - {{ getTeam( game.HomeTeamID ).Losses }} )
+                        <div>
+                            ( {{ getTeam( game.HomeTeamID ).Wins }} - {{ getTeam( game.HomeTeamID ).Losses }} )
+                        </div>
+                        <div>
+                            <img class="team-logo" [src]="getTeam( game.HomeTeamID ).TeamLogoUrl" alt="SMU">
+                            {{ getTeam( game.HomeTeamID ).School.length > 11 ? getTeam( game.HomeTeamID ).Key : getTeam( game.HomeTeamID ).School }}
+                        </div>
+                        <div>
+                            <span *ngIf="game.resultHome && game.resultAway">
+                                {{ (game.resultHome / divider) | number }}
+                            </span>
+                        </div>
+                        <div>
+                            <span *ngIf="game.resultHome && game.resultAway">{{ (game.resultHome - game.resultAway) / divider | number }}</span> &nbsp;
+                            <span class="odds">{{ game.PointSpread | number }}</span>                            
+                        </div>
                     </td>
                     <td>
-                        <img class="team-logo" [src]="getTeam( game.AwayTeamID ).TeamLogoUrl" alt="SMU"> {{ getTeam( game.AwayTeamID ).School }} ( {{ getTeam( game.AwayTeamID ).Wins }} - {{ getTeam( game.AwayTeamID ).Losses }} )
+                        <div><span *ngIf="game.resultHome && game.resultAway">{{ (game.resultHome + game.resultAway) / divider | number }}</span></div>
+                        <div><span class="odds"> {{ game.OverUnder }} </span></div>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm" (click)="calculateGame( game.HomeTeamID, game.AwayTeamID )">
-                            <i class="fa fa-bars"></i>
+                    <td class="rigt-panel">
+                        <div>
+                            ( {{ getTeam( game.AwayTeamID ).Wins }} - {{ getTeam( game.AwayTeamID ).Losses }} )
+                        </div>
+                        <div>
+                            <img class="team-logo" [src]="getTeam( game.AwayTeamID ).TeamLogoUrl" alt="SMU">
+                            {{ getTeam( game.AwayTeamID ).School }}
+                        </div>
+                        <div>
+                            <span *ngIf="game.resultHome && game.resultAway">
+                                {{ (game.resultAway / divider) | number }}
+                            </span>
+                        </div>
+                        <div *ngIf="game.resultHome && game.resultAway">
+                            {{ (game.resultAway - game.resultHome) / divider | number }}
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game )">
+                            <i class="fa fa-calculator"></i>
                         </button>
                     </td>
                 </tr>
