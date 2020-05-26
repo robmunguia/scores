@@ -14,12 +14,12 @@ export class WnbaService {
   getGames( date: Date ) {
     const month = this.zeroPad(date.getMonth() + 1, 2 );
     const day = this.zeroPad(date.getDate(), 2 );
-    const url = `http://api.sportradar.us/wnba/trial/v7/en/games/${date.getFullYear()}/${ month }/${ day }/schedule.json?api_key=${this.apiKey}`;
+    const url = `https://api.sportradar.us/wnba/trial/v7/en/games/${date.getFullYear()}/${ month }/${ day }/schedule.json?api_key=${this.apiKey}`;
     return this.http.get( url );
   }
 
   getHistorical( season: string ) {
-    const url = `http://api.sportradar.us/wnba/trial/v7/en/games/${season}/REG/schedule.json?api_key=${this.apiKey}`;
+    const url = `https://api.sportradar.us/wnba/trial/v7/en/games/${season}/REG/schedule.json?api_key=${this.apiKey}`;
     return this.http.get( url );
   }
 

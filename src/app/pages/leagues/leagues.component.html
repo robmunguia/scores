@@ -2,76 +2,15 @@
     <h1>Select League</h1>
 </div>
 <div class="row">
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="title font-weight-bold text-primary text-uppercase mb-1">NCAAB</div>
-            </div>
-            <div class="col-auto">
-              <img class="img-logo" src="assets/images/ncaab.png" alt="ncaab">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4 clickeable" *ngFor="let league of leagues" (click)="openLeague( league )">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="title font-weight-bold text-primary text-uppercase mb-1">NCAAF</div>
+                        <div class="title font-weight-bold text-primary text-uppercase mb-1">{{ league.title }}</div>
                     </div>
                     <div class="col-auto">
-                        <img class="img-logo" src="assets/images/ncaaf.jpg" alt="ncaab">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="title font-weight-bold text-primary text-uppercase mb-1">NBA</div>
-                    </div>
-                    <div class="col-auto">
-                        <img class="img-logo" src="assets/images/nba.png" alt="ncaab">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="title font-weight-bold text-primary text-uppercase mb-1">WNBA</div>
-                    </div>
-                    <div class="col-auto">
-                        <img class="img-logo" src="assets/images/wnba.png" alt="ncaab">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="title font-weight-bold text-primary text-uppercase mb-1">CFL</div>
-                    </div>
-                    <div class="col-auto">
-                        <img class="img-logo" src="assets/images/cfl_logo.jpg" alt="cfl">
+                        <img class="img-logo" [src]="league.img" [alt]="league.title" />
                     </div>
                 </div>
             </div>

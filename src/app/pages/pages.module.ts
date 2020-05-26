@@ -11,13 +11,15 @@ import { PagesComponent } from './pages.component';
 import { GamesComponent } from './games/games.component';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { WnbaComponent } from './games/wnba/wnba.component';
+import { NcaabComponent } from './games/ncaab/ncaab.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
     GamesComponent,
     LeaguesComponent,
-    WnbaComponent
+    WnbaComponent,
+    NcaabComponent
   ],
   imports: [
     CommonModule,

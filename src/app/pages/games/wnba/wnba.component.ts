@@ -29,7 +29,6 @@ export class WnbaComponent implements OnInit {
     this.wnbaService.getGames( this.day )
     .subscribe((resp: any) => {
       this.games = resp.games;
-      console.log(this.games);
       this.delay( 800 );
     });
   }
@@ -48,11 +47,7 @@ export class WnbaComponent implements OnInit {
     });
   }
 
-  // analize
   calculateGames() {
-    // debug mode
-    // this.analyzeGames( this.games[0] );
-
     this.games.forEach(item => {
       this.analyzeGames( item );
     });
@@ -71,7 +66,6 @@ export class WnbaComponent implements OnInit {
     for ( const item of this.historical.filter( g => g.away.id === teamId && g.status === 'closed' && new Date(g.scheduled) < this.day)) {
       totalGames.push( item );
     }
-    console.log(totalGames);
     totalGames.sort( ( a, b ) => {
       const dateA: any = new Date(a.scheduled);
       const dateB: any = new Date(b.scheduled);
