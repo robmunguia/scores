@@ -124,7 +124,7 @@ export class GamesComponent implements OnInit {
       const dateB: any = new Date(b.DateTime);
       return dateB - dateA;
     });
-    for ( let i = 0; i < 5; i++ ) {
+    for ( let i = 0; i < this.divider; i++ ) {
       this.gameId = homeGames[i].GameId;
       const gameDate = new Date(homeGames[i].DateTime);
       this.getGameScore(game, gameDate, teamId, home );
@@ -152,9 +152,9 @@ export class GamesComponent implements OnInit {
           away.Periods.forEach(item => {
             if ( item.Name === '1' || item.Name === '2') {
               if ( isHome ) {
-                game.resultHome += item.HomeScore;
+                game.resultHome += item.AwayScore;
               } else {
-                game.resultAway += item.HomeScore;
+                game.resultAway += item.AwayScore;
               }
             }
           });
@@ -169,7 +169,7 @@ export class GamesComponent implements OnInit {
     if (isHome) {
       this.homeGames.push( game );
     } else {
-      this.awayGames.push( game );
+      this.awayGames.push( game );      
     }
   }
 

@@ -1,0 +1,64 @@
+
+<div class="row">
+    <div class="col-6">
+        <div class="btn-group margenes" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary"></button>
+            <button type="button" class="btn btn-secondary">TODAY</button>
+            <button type="button" class="btn btn-secondary"></button>
+        </div>
+    </div>
+    <div class="col-6 text-right">
+        <span>{{ day | date: 'yyyy-MM-dd' }}</span>
+    </div>
+</div>
+<hr />
+<div *ngIf="games" class="row">
+    <div class="col-lg-8 col-center">
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Home</th>
+                    <th></th>
+                    <th class="text-center">Away</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of games; let i = index">
+                    <td>
+                        <div>
+                            {{ game.home.name }} ( {{ game.home.alias }} )
+                        </div>
+                        <div>
+                            <span>
+                                {{ (game.resultHome / divider) | number }}
+                            </span>
+                        </div>
+                        <div>
+                        </div>
+                    </td>
+                    <td>
+                        <div><span>{{ (game.resultHome / divider) + (game.resultAway / divider) | number }}</span></div>
+                    </td>
+                    <td class="right-panel">
+                        <div>
+                            {{ game.away.name }} ( {{ game.away.alias }} )
+                        </div>
+                        <div>
+                            <span>
+                                {{ game.resultAway / divider | number }}
+                            </span>
+                        </div>
+                        <div>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <!-- <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game )">
+                            <i class="fa fa-calculator"></i>
+                        </button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
