@@ -20,7 +20,6 @@
                     <th class="text-center">Home</th>
                     <th></th>
                     <th class="text-center">Away</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +34,7 @@
                             </span>
                         </div>
                         <div>
+                            {{ (game.resultHome - game.resultAway) / divider | number }}
                         </div>
                     </td>
                     <td>
@@ -50,12 +50,8 @@
                             </span>
                         </div>
                         <div>
+                            {{ (game.resultAway - game.resultHome) / divider | number }}
                         </div>
-                    </td>
-                    <td style="text-align: right;">
-                        <!-- <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game )">
-                            <i class="fa fa-calculator"></i>
-                        </button> -->
                     </td>
                 </tr>
             </tbody>
