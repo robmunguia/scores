@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiKey: 'fc2726ff03a24560a9c1a7362e820fcd',
+  apiKeyNBA: 'b91765b4c61f4d5c8ad7976a34ca3821',
   apiKeyWNBA: 'vqqewx52m2f62568w6uu8xbt',
   url: 'https://api.sportsdata.io/v3/cbb/scores/json',
   firebase: {

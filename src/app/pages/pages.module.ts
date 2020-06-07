@@ -12,6 +12,7 @@ import { GamesComponent } from './games/games.component';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { WnbaComponent } from './games/wnba/wnba.component';
 import { NcaabComponent } from './games/ncaab/ncaab.component';
+import { NbaComponent } from './games/nba/nba.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NcaabComponent } from './games/ncaab/ncaab.component';
     GamesComponent,
     LeaguesComponent,
     WnbaComponent,
-    NcaabComponent
+    NcaabComponent,
+    NbaComponent
   ],
   imports: [
     CommonModule,

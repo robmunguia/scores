@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { WnbaComponent } from './games/wnba/wnba.component';
 import { NcaabComponent } from './games/ncaab/ncaab.component';
+import { NbaComponent } from './games/nba/nba.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,7 @@ const routes: Routes = [
         children: [
             { path: 'ncaab', component: NcaabComponent },
             { path: 'wnba', component: WnbaComponent },
+            { path: 'nba', component: NbaComponent },
             { path: 'leagues', component: LeaguesComponent },
             { path: '', redirectTo: '/leagues', pathMatch: 'full'  },
         ]

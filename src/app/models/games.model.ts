@@ -20,6 +20,7 @@ export class Games {
         public IsClosed: boolean = false,
         // tslint:disable-next-line: no-shadowed-variable
         public Periods: Periods[] = null,
+        public Quarters: Periods[] = null,
         public resultHome: number = null,
         public resultAway: number = null,
     ) { }
