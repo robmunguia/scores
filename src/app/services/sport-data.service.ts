@@ -11,61 +11,15 @@ export class SportDataService {
 
   constructor(private http: HttpClient) { }
 
-  getTeams() {
-    // return this.http.get( `${ this.url }/teams` );
-    return this.http.get( 'https://api.sportsdata.io/v3/cbb/scores/json/teams' );
+  getTodayGames( maxDate: string) {
+    const _apiKey = '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8';
+    const _from = '2020-01-01';
+    const _to = maxDate;
+    const _timeZone = 'America/New_York';
+    const _league = '792';
+    const query: string = `https://allsportsapi.com/api/basketball/?met=Fixtures&APIkey=${_apiKey}&
+                          from=${_from}&to=${_to}&timezone=${_timeZone}&leagueId=${_league}`;
+    return this.http.get(query);
   }
 
-  getGamesDay( date: Date ) {
-    // const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
-    const formatDate = '2020-MAR-06';
-    return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
-  }
-  getGamesDayPeriods( date: Date ) {
-    const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
-    return this.http.get( `${ this.url }/GamesByDate/${ formatDate }` );
-  }
-
-  getSchedules() {
-    // return this.http.get( '../assets/data.json' );
-    return this.http.get( `${this.url}/Games/2020REG` );
-  }
-
-
-  /*  Metodos sin Api   */
-
-  getFormatDay( date: Date ): string {
-      return ('0' + date.getDate()).slice(-2);
-  }
-
-  getFormatMonth( month: number ): string {
-    switch ( month ) {
-      case 0:
-        return 'JAN';
-      case 1:
-        return 'FEB';
-      case 2:
-        return 'MAR';
-      case 3:
-        return 'APR';
-      case 4:
-        return 'MAY';
-      case 5:
-        return 'JUN';
-      case 6:
-        return 'JUL';
-      case 7:
-        return 'AUG';
-      case 8:
-        return 'SEP';
-      case 9:
-        return 'OCT';
-      case 10:
-        return 'NOV';
-      case 11:
-        return 'DEC';
-        default:
-          return 'DEC';
-    }
-  }
 }

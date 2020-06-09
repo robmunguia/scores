@@ -2,9 +2,9 @@
 <div class="row">
     <div class="col-6">
         <div class="btn-group margenes" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary"></button>
-            <button type="button" class="btn btn-secondary">TODAY</button>
-            <button type="button" class="btn btn-secondary"></button>
+            <button (click)="changeDate(0)" type="button" [ngClass]="{'active': selectedDate === 'TODAY' }" class="btn btn-secondary">TODAY</button>
+            <button (click)="changeDate(1)" type="button" [ngClass]="{'active': selectedDate === midDate }" class="btn btn-secondary">{{ midDate }}</button>
+            <button (click)="changeDate(2)" type="button" [ngClass]="{'active': selectedDate === endDate }" class="btn btn-secondary">{{ endDate }}</button>
         </div>
     </div>
     <div class="col-6 text-right">
@@ -12,7 +12,7 @@
     </div>
 </div>
 <hr />
-<div *ngIf="games" class="row">
+<div class="row">
     <div class="col-lg-8 col-center">
         <table class="table table-sm">
             <thead class="thead-dark">
@@ -20,37 +20,41 @@
                     <th class="text-center">Home</th>
                     <th></th>
                     <th class="text-center">Away</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let game of games; let i = index">
                     <td>
                         <div>
-                            {{ game.home.name }} ( {{ game.home.alias }} )
+                            <img class="team-logo" [src]="game.event_home_team_logo" alt="SMU">
+                            {{ game.event_home_team }}
                         </div>
                         <div>
                             <span>
-                                {{ (game.resultHome / divider) | number }}
+                                {{ game.homeAveragePoints | number }}
                             </span>
                         </div>
                         <div>
-                            {{ (game.resultHome - game.resultAway) / divider | number }}
+                            <span> {{ game.homeAveragePoints - game.awayAveragePoints | number }}  </span> &nbsp;
                         </div>
                     </td>
                     <td>
-                        <div><span>{{ (game.resultHome / divider) + (game.resultAway / divider) | number }}</span></div>
+                        <div><span> {{ game.homeAveragePoints + game.awayAveragePoints | number }} </span></div>
+                        <span *ngIf="game.event_status === 'Finished'" class="odds"> {{ game.event_final_result }} </span>
                     </td>
-                    <td class="right-panel">
+                    <td class="rigt-panel">
                         <div>
-                            {{ game.away.name }} ( {{ game.away.alias }} )
+                            <img class="team-logo" [src]="game.event_away_team_logo" alt="away">
+                            {{ game.event_away_team }}
                         </div>
                         <div>
                             <span>
-                                {{ game.resultAway / divider | number }}
+                                {{ game.awayAveragePoints | number }}
                             </span>
                         </div>
                         <div>
-                            {{ (game.resultAway - game.resultHome) / divider | number }}
+                            {{ game.awayAveragePoints - game.homeAveragePoints | number }}
                         </div>
                     </td>
                 </tr>

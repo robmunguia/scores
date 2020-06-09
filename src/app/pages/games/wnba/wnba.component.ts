@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WnbaService } from '../../../services/wnba.service';
-import { WNBAGames } from '../../../models/wnba-games';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-wnba',
@@ -10,90 +9,113 @@ import { WNBAGames } from '../../../models/wnba-games';
 })
 export class WnbaComponent implements OnInit {
 
-  day: Date = new Date(2019, 8 - 1, 1);
-  divider = 5;
-  games: WNBAGames[] = null;
-  historical = null;
-
-  homeScore: number = 0;
-  awayScore: number = 0;
+  monthGames: any[];
+  games: NbaGames[];
+  divider: number = 5;
+  actualDate: Date = new Date(2019, 7, 1);
+  dateGames = moment(this.actualDate).format('yyyy-MM-DD');
+  maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
+  midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
+  endDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('MMM DD');
+  selectedDate: string = 'TODAY';
 
   constructor(private wnbaService: WnbaService) {
-    this.getGames();
   }
 
   ngOnInit() {
+    this.getGames();
   }
 
   getGames() {
-    this.wnbaService.getGames( this.day )
+    this.wnbaService.getTodayGames( this.maxDate )
     .subscribe((resp: any) => {
-      this.games = resp.games;
-      this.delay( 800 );
+      this.monthGames = resp.result;
+      this.games = resp.result.filter(g => g.event_date === this.dateGames);
+      this.analize();
     });
   }
 
-  getHistorical() {
-    this.wnbaService.getHistorical( '2019' )
-    .subscribe((resp: any) => {
-      this.historical = resp.games;
-      this.calculateGames();
-    });
-  }
-
-  async delay( ms: number ) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=> {
-      this.getHistorical();
-    });
-  }
-
-  calculateGames() {
+  analize() {
     this.games.forEach(item => {
-      this.analyzeGames( item );
+      this.lastGames( item.home_team_key, true, item );
+      this.lastGames( item.away_team_key, false, item );
     });
   }
 
-  analyzeGames( game: WNBAGames ) {
-    this.getLastGames( game.home.id, game, true );
-    this.getLastGames( game.away.id, game, false );
-  }
-
-  getLastGames( teamId: string, game: WNBAGames, isHome: boolean ) {
-    const totalGames: WNBAGames[] = [];
-    for ( const item of this.historical.filter( g => g.home.id === teamId && g.status === 'closed' && new Date(g.scheduled) < this.day )) {
-      totalGames.push( item );
-    }
-    for ( const item of this.historical.filter( g => g.away.id === teamId && g.status === 'closed' && new Date(g.scheduled) < this.day)) {
-      totalGames.push( item );
-    }
-    totalGames.sort( ( a, b ) => {
-      const dateA: any = new Date(a.scheduled);
-      const dateB: any = new Date(b.scheduled);
-      return dateB - dateA;
+  lastGames( teamId: string, isHome: boolean, game: NbaGames ) {
+    const homeGames: any[] = this.monthGames.filter(g => (g.home_team_key === teamId || g.away_team_key === teamId) && g.event_status === 'Finished' && g.event_date !== this.dateGames);
+    let i: number = 0;
+    let score: number = 0;
+    homeGames.forEach( (item) => {
+      if ( i < this.divider ) {
+        const isHomeInGames: boolean = item.home_team_key === teamId ? true : false;
+        score += this.getScores( isHomeInGames, item.scores )
+        i++;
+      }
     });
-    for ( let i = 0; i < this.divider; i++ ) {
-      if ( game.resultHome === undefined)
-      game.resultHome = 0;
-      if ( game.resultAway === undefined)
-        game.resultAway = 0;
-      this.getGameScore( totalGames[i], teamId, game, isHome );
+    if ( isHome) {
+      game.homeTotalPoints = score;
+      game.homeAveragePoints = score / this.divider;
+    } else {
+      game.awayTotalPoints = score;
+      game.awayAveragePoints = score / this.divider;
     }
   }
 
-  getGameScore(game: any, teamId: string, localGame: WNBAGames, isHome: boolean ) {
-    if ( game.home.id === teamId ) {
-      if ( isHome ) {
-        localGame.resultHome += game.home_points;
-      } else {
-        localGame.resultAway += game.home_points;
-      }
-    } else if ( game.away.id === teamId ) {
-      if ( isHome ) {
-        localGame.resultHome += game.away_points;
-      } else {
-        localGame.resultAway += game.away_points;
-      }
+  getScores( isHome: boolean, scores_result: any ): number {
+    let points: number = 0;
+    if ( isHome ) {
+      points += Number(scores_result['1stQuarter'][0].score_home);
+      points += Number(scores_result['2ndQuarter'][0].score_home);
+      points += Number(scores_result['3rdQuarter'][0].score_home);
+      points += Number(scores_result['4thQuarter'][0].score_home);
+    } else {
+      points += Number(scores_result['1stQuarter'][0].score_away);
+      points += Number(scores_result['2ndQuarter'][0].score_away);
+      points += Number(scores_result['3rdQuarter'][0].score_away);
+      points += Number(scores_result['4thQuarter'][0].score_away);
+    }
+    return points;
+  }
+
+  changeDate( addDays: number ) {
+    switch ( addDays ) {
+      case 0:
+        this.selectedDate = 'TODAY';
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
+        this.analize();
+        break;
+      default:
+        const realDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
+        this.selectedDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === realDate);
+        this.analize();
+        break;
     }
   }
 
+}
+
+interface NbaGames {
+  event_key: string,
+  event_date: string,
+  event_time: string,
+  event_final_result: string,
+  event_status: string,
+  event_home_team: string,
+  home_team_key: string,
+  event_home_team_logo: string,
+  event_away_team: string,
+  away_team_key: string,
+  event_away_team_logo: string,
+
+  analizeGames: NbaGames[],
+  homeTotalPoints: number,
+  awayTotalPoints: number,
+  homeAveragePoints: number,
+  awayAveragePoints: number,
 }

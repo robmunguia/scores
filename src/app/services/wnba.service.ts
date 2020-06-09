@@ -11,21 +11,15 @@ export class WnbaService {
 
   constructor(private http: HttpClient) { }
 
-  getGames( date: Date ) {
-    const month = this.zeroPad(date.getMonth() + 1, 2 );
-    const day = this.zeroPad(date.getDate(), 2 );
-    const url = `https://api.sportradar.us/wnba/trial/v7/en/games/${date.getFullYear()}/${ month }/${ day }/schedule.json?api_key=${this.apiKey}`;
-    return this.http.get( url );
-  }
-
-  getHistorical( season: string ) {
-    const url = `https://api.sportradar.us/wnba/trial/v7/en/games/${season}/REG/schedule.json?api_key=${this.apiKey}`;
-    return this.http.get( url );
-  }
-
-  zeroPad(num, places) {
-    var zero = places - num.toString().length + 1;
-    return Array(+(zero > 0 && zero)).join('0') + num;
+  getTodayGames( maxDate: string) {
+    const _apiKey = '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8';
+    const _from = '2019-01-01';
+    const _to = maxDate;
+    const _timeZone = 'America/New_York';
+    const _league = '8925';
+    const query: string = `https://allsportsapi.com/api/basketball/?met=Fixtures&APIkey=${_apiKey}&
+                          from=${_from}&to=${_to}&timezone=${_timeZone}&leagueId=${_league}`;
+    return this.http.get(query);
   }
 
 }

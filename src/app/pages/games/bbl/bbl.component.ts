@@ -18,10 +18,6 @@ export class BblComponent implements OnInit {
   endDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('MMM DD');
   selectedDate: string = 'TODAY';
 
-
-  date: Date;
-  valueDay = 0;
-
   constructor(private bblService: BblService) { }
 
   ngOnInit() {
@@ -47,7 +43,6 @@ export class BblComponent implements OnInit {
 
   lastGames( teamId: string, isHome: boolean, game: NbaGames ) {
     const homeGames: any[] = this.monthGames.filter(g => (g.home_team_key === teamId || g.away_team_key === teamId) && g.event_status === 'Finished' && g.event_date !== this.dateGames);
-    console.log(homeGames);
     let i: number = 0;
     let score: number = 0;
     homeGames.forEach( (item) => {

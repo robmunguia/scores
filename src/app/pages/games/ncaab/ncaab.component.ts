@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SportDataService } from '../../../services/sport-data.service';
-import { Games } from '../../../models/games.model';
-import { Team } from '../../../models/teams.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ncaab',
@@ -10,159 +9,113 @@ import { Team } from '../../../models/teams.model';
 })
 export class NcaabComponent implements OnInit {
 
-  games: Games[] = null;
-  schedules: Games[] = null;
-  teams: Team[] = null;
+  monthGames: any[];
+  games: NbaGames[];
   divider: number = 5;
-  // variable
-  loading: boolean = false;
-  date: Date = new Date();
-  valueDay = 0;
-  gameId = 0;
-  // homeScore: number = 0;
-  homeGames: Games[] = [];
-  awayGames: Games[] = [];
+  actualDate: Date = new Date(2020, 2, 6);
+  dateGames = moment(this.actualDate).format('yyyy-MM-DD');
+  maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
+  midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
+  endDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('MMM DD');
+  selectedDate: string = 'TODAY';
 
   constructor(public dataService: SportDataService) {
-    this.getShedules();
   }
 
   ngOnInit() {
-    this.getTeams();
     this.getGames();
   }
 
-  getShedules() {
-    this.loading = true;
-    this.schedules = JSON.parse(localStorage.getItem('schedules'));
-    if ( !localStorage.getItem('schedules') ) {
-      this.dataService.getSchedules()
-      .subscribe((data: Games[]) => {
-        this.loading = false;
-        this.schedules = data;
-      });
-    }
-  }
-
-  getTeams() {
-    // if is empty, storage the data in local storage
-    this.teams = JSON.parse(localStorage.getItem('teams'));
-    if ( !localStorage.getItem('teams')) {
-      this.dataService.getTeams()
-      .subscribe((resp: Team[]) => {
-        this.teams = resp;
-        localStorage.setItem('teams', JSON.stringify(this.teams));
-      });
-    }
-  }
-
   getGames() {
-    // if is empty, storage the data in local storage
-    this.games = JSON.parse(localStorage.getItem('games'));
-    if ( !localStorage.getItem('games') ) {
-      this.dataService.getGamesDay(this.date)
-      .subscribe((resp: Games[]) => {
-        this.games = resp;
-        localStorage.setItem('games', JSON.stringify(this.games));
-      });
-    }
+    this.dataService.getTodayGames( this.maxDate )
+    .subscribe((resp: any) => {
+      this.monthGames = resp.result;
+      this.games = resp.result.filter(g => g.event_date === this.dateGames);
+      this.analize();
+    })
   }
 
-  getTeam( id: number ): Team {
-    if ( this.teams ) {
-      return this.teams.filter( t => t.TeamID === id)[0];
-    }
-  }
-
-  changeDate( x: number ) {
-    this.valueDay = x;
-    this.date = new Date('2020-03-06');
-    if (this.valueDay === -1 ) {
-      this.date.setDate(this.date.getDate() - 1);
-    } else {
-      this.date.setDate(this.date.getDate() + 1);
-    }
-  }
-
-  displayDate( x: number ): string {
-    const date = new Date('2020-03-06');
-    if (x === -1 ) {
-      date.setDate(date.getDate() - 1);
-    } else if (x === 1 ) {
-      date.setDate(date.getDate() + 1);
-    }
-    return `${this.dataService.getFormatMonth( date.getMonth() )} ${this.dataService.getFormatDay(date)}`;
-  }
-
-  calculate(game: Games) {
-    this.homeGames = [];
-    this.awayGames = [];
-    game.resultHome = 0;
-    game.resultAway = 0;
-    this.analyzeGames(game, game.HomeTeamID, true );
-    this.analyzeGames(game, game.AwayTeamID, false );
-  }
-
-  analyzeGames(game: Games, teamId: number, home: boolean ) {
-    const homeGames: Games[] = [];
-    for ( const item of this.schedules.filter( g => g.HomeTeamID === teamId && g.IsClosed)) {
-      homeGames.push( item );
-    }
-    for ( const item of this.schedules.filter( g => g.AwayTeamID === teamId && g.IsClosed)) {
-      homeGames.push( item );
-    }
-    homeGames.sort( ( a, b ) => {
-      const dateA: any = new Date(a.DateTime);
-      const dateB: any = new Date(b.DateTime);
-      return dateB - dateA;
-    });
-    for ( let i = 0; i < this.divider; i++ ) {
-      this.gameId = homeGames[i].GameId;
-      const gameDate = new Date(homeGames[i].DateTime);
-      this.getGameScore(game, gameDate, teamId, home );
-    }
-  }
-
-  getGameScore(game: Games, gameDate: Date, teamId: number, isHome: boolean ) {
-    return new Promise<Games[]>( resolve => {
-      this.dataService.getGamesDayPeriods( new Date(gameDate) )
-      .subscribe((resp: Games[]) => {
-        const home: Games = resp.filter(g => g.HomeTeamID === teamId)[0];
-        const away: Games = resp.filter(g => g.AwayTeamID === teamId)[0];
-        // Totals scores
-        if ( home ) {
-          home.Periods.forEach(item => {
-            if ( item.Name === '1' || item.Name === '2') {
-              if (isHome) {
-                game.resultHome += item.HomeScore;
-              } else {
-                game.resultAway += item.HomeScore;
-              }
-            }
-          });
-        } else if ( away ) {
-          away.Periods.forEach(item => {
-            if ( item.Name === '1' || item.Name === '2') {
-              if ( isHome ) {
-                game.resultHome += item.AwayScore;
-              } else {
-                game.resultAway += item.AwayScore;
-              }
-            }
-          });
-        }
-        // push history games
-        this.pushGame( isHome, home ? home : away);
-      });
+  analize() {
+    this.games.forEach(item => {
+      this.lastGames( item.home_team_key, true, item );
+      this.lastGames( item.away_team_key, false, item );
     });
   }
 
-  pushGame( isHome: boolean, game: Games) {
-    if (isHome) {
-      this.homeGames.push( game );
+  lastGames( teamId: string, isHome: boolean, game: NbaGames ) {
+    const homeGames: any[] = this.monthGames.filter(g => (g.home_team_key === teamId || g.away_team_key === teamId) && g.event_status === 'Finished' && g.event_date !== this.dateGames);
+    let i: number = 0;
+    let score: number = 0;
+    homeGames.forEach( (item) => {
+      if ( i < this.divider ) {
+        const isHomeInGames: boolean = item.home_team_key === teamId ? true : false;
+        score += this.getScores( isHomeInGames, item.scores )
+        i++;
+      }
+    });
+    if ( isHome) {
+      game.homeTotalPoints = score;
+      game.homeAveragePoints = score / this.divider;
     } else {
-      this.awayGames.push( game );      
+      game.awayTotalPoints = score;
+      game.awayAveragePoints = score / this.divider;
     }
   }
 
+  getScores( isHome: boolean, scores_result: any ): number {
+    let points: number = 0;
+    if ( isHome ) {
+      points += Number(scores_result['1stQuarter'][0].score_home);
+      points += Number(scores_result['2ndQuarter'][0].score_home);
+      points += Number(scores_result['3rdQuarter'][0].score_home);
+      points += Number(scores_result['4thQuarter'][0].score_home);
+    } else {
+      points += Number(scores_result['1stQuarter'][0].score_away);
+      points += Number(scores_result['2ndQuarter'][0].score_away);
+      points += Number(scores_result['3rdQuarter'][0].score_away);
+      points += Number(scores_result['4thQuarter'][0].score_away);
+    }
+    return points;
+  }
+
+  changeDate( addDays: number ) {
+    switch ( addDays ) {
+      case 0:
+        this.selectedDate = 'TODAY';
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
+        this.analize();
+        break;
+      default:
+        const realDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
+        this.selectedDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === realDate);
+        this.analize();
+        break;
+    }
+  }
+
+}
+
+interface NbaGames {
+  event_key: string,
+  event_date: string,
+  event_time: string,
+  event_final_result: string,
+  event_status: string,
+  event_home_team: string,
+  home_team_key: string,
+  event_home_team_logo: string,
+  event_away_team: string,
+  away_team_key: string,
+  event_away_team_logo: string,
+
+  analizeGames: NbaGames[],
+  homeTotalPoints: number,
+  awayTotalPoints: number,
+  homeAveragePoints: number,
+  awayAveragePoints: number,
 }
