@@ -12,9 +12,12 @@ export class NbaComponent implements OnInit {
   monthGames: any[];
   games: NbaGames[];
   divider: number = 5;
-
-  date: Date;
-  valueDay = 0;
+  actualDate: Date = new Date(2020, 2, 10);
+  dateGames = moment(this.actualDate).format('yyyy-MM-DD');
+  maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
+  midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
+  endDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('MMM DD');
+  selectedDate: string = 'TODAY';
 
   constructor(private dataService: NbaService) {
   }
@@ -24,7 +27,7 @@ export class NbaComponent implements OnInit {
   }
 
   getGames() {
-    this.dataService.getTodayGames()
+    this.dataService.getTodayGames( this.maxDate )
     .subscribe((resp: any) => {
       this.monthGames = resp.result;
       const _date = moment('2020-03-06').format('yyyy-MM-DD');
@@ -41,7 +44,7 @@ export class NbaComponent implements OnInit {
   }
 
   lastGames( teamId: string, isHome: boolean, game: NbaGames ) {
-    const homeGames: any[] = this.monthGames.filter(g => g.home_team_key === teamId || g.away_team_key === teamId);
+    const homeGames: any[] = this.monthGames.filter(g => (g.home_team_key === teamId || g.away_team_key === teamId) && g.event_status === 'Finished' && g.event_date !== this.dateGames);
     let i: number = 0;
     let score: number = 0;
     homeGames.forEach( (item) => {
@@ -76,25 +79,24 @@ export class NbaComponent implements OnInit {
     return points;
   }
 
-  changeDate( x: number ) {
-    this.valueDay = x;
-    console.log(moment(this.date));
-    const date = new Date('2020-03-06');
-    if (this.valueDay === -1 ) {
-      this.date.setDate(this.date.getDate() - 1);
-    } else {
-      this.date.setDate(this.date.getDate() + 1);
+  changeDate( addDays: number ) {
+    switch ( addDays ) {
+      case 0:
+        this.selectedDate = 'TODAY';
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
+        this.analize();
+        break;
+      default:
+        const realDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
+        this.selectedDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
+        // get games
+        this.games = [];
+        this.games = this.monthGames.filter(g => g.event_date === realDate);
+        this.analize();
+        break;
     }
-  }
-
-  displayDate( x: number ): string {
-    const date = new Date('2020-03-06');
-    if (x === -1 ) {
-      date.setDate(date.getDate() - 1);
-    } else if (x === 1 ) {
-      date.setDate(date.getDate() + 1);
-    }
-    return `${this.dataService.getFormatMonth( date.getMonth() )} ${this.dataService.getFormatDay(date)}`;
   }
 
 }
@@ -103,6 +105,8 @@ interface NbaGames {
   event_key: string,
   event_date: string,
   event_time: string,
+  event_final_result: string,
+  event_status: string,
   event_home_team: string,
   home_team_key: string,
   event_home_team_logo: string,
