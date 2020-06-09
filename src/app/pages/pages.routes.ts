@@ -7,6 +7,7 @@ import { LeaguesComponent } from './leagues/leagues.component';
 import { WnbaComponent } from './games/wnba/wnba.component';
 import { NcaabComponent } from './games/ncaab/ncaab.component';
 import { NbaComponent } from './games/nba/nba.component';
+import { BblComponent } from './games/bbl/bbl.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
             { path: 'wnba', component: WnbaComponent },
             { path: 'nba', component: NbaComponent },
             { path: 'leagues', component: LeaguesComponent },
+            { path: 'bbl', component: BblComponent },
             { path: '', redirectTo: '/leagues', pathMatch: 'full'  },
         ]
     }
