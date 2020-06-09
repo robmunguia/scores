@@ -12,7 +12,7 @@
     </div>
 </div>
 <hr />
-<div *ngIf="teams" class="row">
+<div class="row">
     <div class="col-lg-8 col-center">
         <table class="table table-sm">
             <thead class="thead-dark">
@@ -27,41 +27,36 @@
                 <tr *ngFor="let game of games; let i = index">
                     <td>
                         <div>
-                            <img class="team-logo" [src]="getTeam( game.HomeTeamID ).WikipediaLogoUrl" alt="SMU">
-                            {{ getTeam( game.HomeTeamID ).Name }}
+                            <img class="team-logo" [src]="game.event_home_team_logo" alt="SMU">
+                            {{ game.event_home_team }}
                         </div>
                         <div>
-                            <span *ngIf="game.resultHome">
-                                {{ (game.resultHome / divider) | number }}
+                            <span>
+                                {{ game.homeAveragePoints }}
                             </span>
                         </div>
                         <div>
-                            <span *ngIf="game.resultHome && game.resultAway">{{ (game.resultHome - game.resultAway) / divider | number }}</span> &nbsp;
-                            <span class="odds">{{ game.PointSpread | number }}</span>                            
+                            <span> {{ game.homeTotalPoints - game.awayTotalPoints }}  </span> &nbsp;
+                            <!-- <span class="odds"> odds here </span> -->
                         </div>
                     </td>
                     <td>
-                        <div><span *ngIf="game.resultHome && game.resultAway">{{ (game.resultHome + game.resultAway) / divider | number }}</span></div>
-                        <div><span class="odds"> {{ game.OverUnder }} </span></div>
+                        <div><span> {{ game.homeTotalPoints + game.awayTotalPoints }} </span></div>
+                        <!-- <div><span class="odds"> OverUnder Here!! </span></div> -->
                     </td>
                     <td class="rigt-panel">
                         <div>
-                            <img class="team-logo" [src]="getTeam( game.AwayTeamID ).WikipediaLogoUrl" alt="SMU">
-                            {{ getTeam( game.AwayTeamID ).Name }}
+                            <img class="team-logo" [src]="game.event_away_team_logo" alt="away">
+                            {{ game.event_away_team }}
                         </div>
                         <div>
-                            <span *ngIf="game.resultHome && game.resultAway">
-                                {{ (game.resultAway / divider) | number }}
+                            <span>
+                                {{ game.awayAveragePoints }}
                             </span>
                         </div>
-                        <div *ngIf="game.resultHome && game.resultAway">
-                            {{ (game.resultAway - game.resultHome) / divider | number }}
+                        <div>
+                            {{ game.awayTotalPoints - game.homeTotalPoints }}
                         </div>
-                    </td>
-                    <td style="text-align: right;">
-                        <button *ngIf="!loading" type="button" class="btn btn-primary btn-sm" (click)="calculate( game )">
-                            <i class="fa fa-calculator"></i>
-                        </button>
                     </td>
                 </tr>
             </tbody>

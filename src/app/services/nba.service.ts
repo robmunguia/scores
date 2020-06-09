@@ -12,24 +12,15 @@ export class NbaService {
 
   constructor(private http: HttpClient) { }
 
-  getSchedules() {
-    // return this.http.get( '../assets/data.json' );
-    return this.http.get( 'https://api.sportsdata.io/v3/nba/scores/json/Games/2020' );
-  }
-
-  getTeams() {
-    // return this.http.get( `${ this.url }/teams` );
-    return this.http.get( 'https://api.sportsdata.io/v3/nba/scores/json/teams' );
-  }
-  getGamesDay( date: Date ) {
-    // const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
-    const formatDate = '2020-MAR-10';
-    return this.http.get( `https://api.sportsdata.io/v3/nba/scores/json/GamesByDate/2020-MAR-10` );
-  }
-
-  getGamesDayPeriods( date: Date ) {
-    const formatDate = `${date.getFullYear()}-${this.getFormatMonth(date.getMonth())}-${this.getFormatDay(date)}`;
-    return this.http.get( `https://api.sportsdata.io/v3/nba/scores/json/GamesByDate/${ formatDate }` );
+  getTodayGames() {
+    const _apiKey = '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8';
+    const _from = '2020-02-06';
+    const _to = '2020-03-06';
+    const _timeZone = 'America/New_York';
+    const _league = '787';
+    const query: string = `https://allsportsapi.com/api/basketball/?met=Fixtures&APIkey=${_apiKey}&
+                          from=${_from}&to=${_to}&timezone=${_timeZone}&leagueId=${_league}`;
+    return this.http.get(query);
   }
 
 

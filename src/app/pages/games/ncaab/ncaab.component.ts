@@ -76,7 +76,7 @@ export class NcaabComponent implements OnInit {
 
   changeDate( x: number ) {
     this.valueDay = x;
-    this.date = new Date();
+    this.date = new Date('2020-03-06');
     if (this.valueDay === -1 ) {
       this.date.setDate(this.date.getDate() - 1);
     } else {
@@ -85,7 +85,7 @@ export class NcaabComponent implements OnInit {
   }
 
   displayDate( x: number ): string {
-    const date = new Date();
+    const date = new Date('2020-03-06');
     if (x === -1 ) {
       date.setDate(date.getDate() - 1);
     } else if (x === 1 ) {
