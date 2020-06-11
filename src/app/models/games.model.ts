@@ -1,26 +1,34 @@
-import { Periods } from './periods.model';
 
-export class Games {
+export interface BasketGames {
+    event_key: string,
+    event_date: string,
+    event_time: string,
+    event_final_result: string,
+    event_status: string,
+    event_home_team: string,
+    home_team_key: string,
+    event_home_team_logo: string,
+    event_away_team: string,
+    away_team_key: string,
+    event_away_team_logo: string,
+    scores: any,
+
+    analizeHomeGames: HistoryGames[],
+    analizeAwayGames: HistoryGames[],
+    h2hGames: any[],
+    homeTotalPoints: number,
+    awayTotalPoints: number,
+    homeAveragePoints: number,
+    awayAveragePoints: number,
+}
+
+export class HistoryGames {
     constructor(
-        public GameId: number = 0,
-        public Season: number = 0,
-        public Status: string = '',
-        public Day: Date = new Date(),
-        public DateTime: Date = new Date(),
-        public AwayTeam: string = '',
-        public HomeTeam: string = '',
-        public AwayTeamID: number = 0,
-        public HomeTeamID: number = 0,
-        public AwayTeamScore: number = 0,
-        public HomeTeamScore: number = 0,
-        public PointSpread: number = 0,
-        public OverUnder: number = 0,
-        public AwayTeamMoneyLine: number = 0,
-        public HomeTeamMoneyLine: number = 0,
-        public IsClosed: boolean = false,
-        // tslint:disable-next-line: no-shadowed-variable
-        public Periods: Periods[] = null,
-        public resultHome: number = null,
-        public resultAway: number = null,
+        public gameDate: string = '',
+        public homeName: string = '',
+        public awayName: string = '',
+        public homeScore: number = 0,
+        public awayScore: number = 0,
+        public win: string = '',
     ) { }
 }

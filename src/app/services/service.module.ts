@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 
-import { SportDataService } from './service.index';
+import { NCAABService } from './service.index';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { SportDataService } from './service.index';
       useClass: TokenInterceptor,
       multi: true
     },
-    SportDataService
+    NCAABService
   ],
   declarations: []
 })
