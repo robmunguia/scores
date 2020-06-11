@@ -13,17 +13,17 @@ export class BasketUtil {
                     if ( !game.analizeHomeGames ) {
                         game.analizeHomeGames = [];
                     }
-                    const _homeScore = this.getScores( true, item.scores );
-                    const _awayScore = this.getScores( false, item.scores );
-                    const _winLose = isHomeInGames && _homeScore > _awayScore ? 'W' : 'L';
+                    const _homeScore: number = this.getScores( true, item.scores );
+                    const _awayScore: number = this.getScores( false, item.scores );
+                    const _winLose = isHomeInGames && _homeScore > _awayScore ? 'W' : !isHomeInGames && _homeScore < _awayScore ? 'W' : 'L';
                     game.analizeHomeGames.push( new HistoryGames( item.event_date, item.event_home_team,
                         item.event_away_team, _homeScore, _awayScore, _winLose ) );
                 } else {
                     if ( !game.analizeAwayGames ) {
                         game.analizeAwayGames = [];
                     }
-                    const _homeScore = this.getScores( true, item.scores );
-                    const _awayScore = this.getScores( false, item.scores );
+                    const _homeScore: number = this.getScores( true, item.scores );
+                    const _awayScore: number = this.getScores( false, item.scores );
                     const _winLose = isHomeInGames && _homeScore > _awayScore ? 'W' : 'L';
                     game.analizeAwayGames.push( new HistoryGames( item.event_date, item.event_home_team,
                         item.event_away_team, _homeScore, _awayScore, _winLose ) );

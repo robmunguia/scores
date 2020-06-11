@@ -89,14 +89,14 @@
                                             <tab tabTitle="Away">
                                                 <table class="table table-sm">
                                                     <tbody>
-                                                        <tr *ngFor="let homeGames of game.analizeAwayGames">
-                                                            <td class="date"> {{ homeGames.gameDate.substr(5) }} </td>
-                                                            <td [ngClass]="{ 'team': game.event_away_team ===  homeGames.homeName }"> {{ homeGames.homeName }} </td>
-                                                            <td class="results"> {{ homeGames.homeScore }}:{{ homeGames.awayScore }}</td>
-                                                            <td [ngClass]="{ 'team': game.event_away_team ===  homeGames.awayName }"> {{ homeGames.awayName }}</td>
+                                                        <tr *ngFor="let awayGames of game.analizeAwayGames">
+                                                            <td class="date"> {{ awayGames.gameDate.substr(5) }} </td>
+                                                            <td [ngClass]="{ 'team': game.event_away_team ===  awayGames.homeName }"> {{ awayGames.homeName }} </td>
+                                                            <td class="results"> {{ awayGames.homeScore }}:{{ awayGames.awayScore }}</td>
+                                                            <td [ngClass]="{ 'team': game.event_away_team ===  awayGames.awayName }"> {{ awayGames.awayName }}</td>
                                                             <td class="win-lose">
-                                                                <div [ngClass]="homeGames.win">
-                                                                    {{ homeGames.win }}
+                                                                <div [ngClass]="awayGames.win">
+                                                                    {{ awayGames.win }}
                                                                 </div>
                                                             </td>
                                                         </tr>
