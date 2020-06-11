@@ -1,2 +1,2 @@
 
-export { SportDataService } from './sport-data.service';
+export { NCAABService } from './ncaab.service';

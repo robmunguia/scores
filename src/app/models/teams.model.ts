@@ -14,6 +14,7 @@ export class Team {
         public ConferenceID: number = 0,
         public Conference: string = '',
         public TeamLogoUrl: string = '',
-        public ShortDisplayName: string = ''
+        public ShortDisplayName: string = '',
+        public WikipediaLogoUrl: string = ''
     ) { }
 }

@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+// components
 import { PagesComponent } from './pages.component';
-import { GamesComponent } from './games/games.component';
 import { LeaguesComponent } from './leagues/leagues.component';
+import { WnbaComponent } from './games/wnba/wnba.component';
+import { NcaabComponent } from './games/ncaab/ncaab.component';
+import { NbaComponent } from './games/nba/nba.component';
+import { BblComponent } from './games/bbl/bbl.component';
 
 const routes: Routes = [
     {
         path: '',
         component: PagesComponent,
         children: [
-            { path: 'games', component: GamesComponent },
+            { path: 'ncaab', component: NcaabComponent },
+            { path: 'wnba', component: WnbaComponent },
+            { path: 'nba', component: NbaComponent },
             { path: 'leagues', component: LeaguesComponent },
-            { path: '', redirectTo: '/games', pathMatch: 'full'  },
+            { path: 'bbl', component: BblComponent },
+            { path: '', redirectTo: '/leagues', pathMatch: 'full'  },
         ]
     }
 ];

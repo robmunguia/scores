@@ -4,3 +4,6 @@
  .img-logo {
     width: 150px;
  }
+ .clickeable {
+     cursor: pointer;
+ }
