@@ -6,6 +6,9 @@ import { SharedModule } from '../shared/shared.module';
 import { ServiceModule } from '../services/service.module';
 // Rutas
 import { PagesRouteModule } from './pages.routes';
+
+import { TabModule } from 'angular-tabs-component';
+
 // Componentes
 import { PagesComponent } from './pages.component';
 import { GamesComponent } from './games/games.component';
@@ -29,7 +32,8 @@ import { BblComponent } from './games/bbl/bbl.component';
     CommonModule,
     PagesRouteModule,
     SharedModule,
-    ServiceModule
+    ServiceModule,
+    TabModule,
   ]
 })
 export class PagesModule { }

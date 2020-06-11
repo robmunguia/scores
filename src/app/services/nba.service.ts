@@ -7,19 +7,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NbaService {
 
-  // url = environment.url;
-  url: 'https://api.sportsdata.io/v3/nba/scores/json/Games/2019';
+  apiKey: string = environment.apiKey;
+  url: string = environment.url;
+  timeZone: string = environment.timeZone;
 
   constructor(private http: HttpClient) { }
 
   getTodayGames( maxDate: string ) {
-    const _apiKey = '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8';
     const _from = '2020-01-01';
     const _to = maxDate;
-    const _timeZone = 'America/New_York';
     const _league = '787';
-    const query: string = `https://allsportsapi.com/api/basketball/?met=Fixtures&APIkey=${_apiKey}&
-                          from=${_from}&to=${_to}&timezone=${_timeZone}&leagueId=${_league}`;
+    const query: string = `${this.url}APIkey=${this.apiKey}&from=${_from}&to=${_to}&timezone=${this.timeZone}&leagueId=${_league}`;
     return this.http.get(query);
   }
 

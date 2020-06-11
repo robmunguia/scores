@@ -4,10 +4,9 @@
 
 export const environment = {
   production: false,
-  apiKey: 'fc2726ff03a24560a9c1a7362e820fcd',
-  apiKeyNBA: 'b91765b4c61f4d5c8ad7976a34ca3821',
-  apiKeyWNBA: 'vqqewx52m2f62568w6uu8xbt',
-  url: 'https://api.sportsdata.io/v3/cbb/scores/json',
+  apiKey: '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8',
+  url: 'https://allsportsapi.com/api/basketball/?met=Fixtures&',
+  timeZone: 'America/New_York',
   firebase: {
     apiKey: "AIzaSyCeKqEkqQU4MoyizhgF9OVVZwldz_yyMcY",
     authDomain: "scores-99cfa.firebaseapp.com",

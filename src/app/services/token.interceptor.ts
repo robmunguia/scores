@@ -10,14 +10,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if ( request.url.indexOf('https://api.sportsdata.io') > -1 ) {
-            const apiKey = environment.apiKey;
-            request = request.clone({
-                setHeaders: {
-                    'Ocp-Apim-Subscription-Key': apiKey
-                }
-            });
-        }
+        // if ( request.url.indexOf('https://api.sportsdata.io') > -1 ) {
+        //     const apiKey = environment.apiKey;
+        //     request = request.clone({
+        //         setHeaders: {
+        //             'Ocp-Apim-Subscription-Key': apiKey
+        //         }
+        //     });
+        // }
         return next.handle(request);
     }
 }

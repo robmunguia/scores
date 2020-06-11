@@ -14,3 +14,41 @@
 .rigt-panel {
     text-align: right;
 }
+
+.date {
+    width: 50px;
+}
+.faces-date {
+    width: 90px;
+}
+
+.results {
+    min-width: 55px;
+}
+
+.win-lose {
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+    width: 30px;
+}
+.W {
+    background-color: #5D9C6D;
+}
+.L {
+    background-color: #B22222
+}
+
+.tabs {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: auto;
+    min-height: 80px;
+    font-size: .8rem;
+}
+.team {
+    font-weight: 900;
+}
