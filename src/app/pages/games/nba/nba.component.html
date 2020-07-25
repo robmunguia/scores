@@ -24,7 +24,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let game of games; let i = index">
+                <ng-container *ngFor="let game of games; let i = index">
+                <tr>
                     <td>
                         <div>
                             <img class="team-logo" [src]="game.event_home_team_logo" alt="SMU">
@@ -58,6 +59,70 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a [href]="'#'+game.event_home_team.substring(0,3).replace(' ','')+game.event_away_team.substring(0,3).replace(' ','')" (click)="head2head( game )" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseble">
+                                <h6 class="m-0 font-weight-bold text-primary">History Details</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse" [id]="game.event_home_team.substring(0,3).replace(' ','')+game.event_away_team.substring(0,3).replace(' ','')">
+                                <div class="card-body">
+                                    <tabs class="tabs">
+                                        <tab tabTitle="Home">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr *ngFor="let homeGames of game.analizeHomeGames">
+                                                        <td class="date"> {{ homeGames.gameDate.substr(5) }} </td>
+                                                        <td [ngClass]="{ 'team': game.event_home_team ===  homeGames.homeName }"> {{ homeGames.homeName }} </td>
+                                                        <td> {{ homeGames.homeScore }}:{{ homeGames.awayScore }}</td>
+                                                        <td [ngClass]="{ 'team': game.event_home_team ===  homeGames.awayName }"> {{ homeGames.awayName }}</td>
+                                                        <td class="win-lose">
+                                                            <div [ngClass]="homeGames.win">
+                                                                {{ homeGames.win }}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tab>
+                                        <tab tabTitle="Away">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr *ngFor="let awayGames of game.analizeAwayGames">
+                                                        <td class="date"> {{ awayGames.gameDate.substr(5) }} </td>
+                                                        <td [ngClass]="{ 'team': game.event_away_team ===  awayGames.homeName }"> {{ awayGames.homeName }} </td>
+                                                        <td class="results"> {{ awayGames.homeScore }}:{{ awayGames.awayScore }}</td>
+                                                        <td [ngClass]="{ 'team': game.event_away_team ===  awayGames.awayName }"> {{ awayGames.awayName }}</td>
+                                                        <td class="win-lose">
+                                                            <div [ngClass]="awayGames.win">
+                                                                {{ awayGames.win }}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tab>
+                                        <tab tabTitle="H2H">
+                                            <table class="table table-sm" *ngIf="game.h2hGames">
+                                                <tbody>
+                                                    <tr *ngFor="let facesGames of game.h2hGames">
+                                                        <td class="faces-date"> {{ facesGames.event_date }} </td>
+                                                        <td> {{ facesGames.event_home_team }} </td>
+                                                        <td class="results"> {{ facesGames.event_final_result }}</td>
+                                                        <td> {{ facesGames.event_away_team }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tab>
+                                    </tabs>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>

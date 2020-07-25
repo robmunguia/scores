@@ -17,6 +17,7 @@ import { WnbaComponent } from './games/wnba/wnba.component';
 import { NcaabComponent } from './games/ncaab/ncaab.component';
 import { NbaComponent } from './games/nba/nba.component';
 import { BblComponent } from './games/bbl/bbl.component';
+import { CflComponent } from './games/cfl/cfl.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BblComponent } from './games/bbl/bbl.component';
     WnbaComponent,
     NcaabComponent,
     NbaComponent,
-    BblComponent
+    BblComponent,
+    CflComponent
   ],
   imports: [
     CommonModule,

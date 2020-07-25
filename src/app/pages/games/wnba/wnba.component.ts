@@ -14,7 +14,7 @@ export class WnbaComponent implements OnInit {
   monthGames: any[];
   games: BasketGames[];
   divider: number = 5;
-  actualDate: Date = new Date(2019, 7, 1);
+  actualDate: Date = new Date();
   dateGames = moment(this.actualDate).format('yyyy-MM-DD');
   maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
   midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
@@ -33,6 +33,7 @@ export class WnbaComponent implements OnInit {
     .subscribe((resp: any) => {
       this.monthGames = resp.result;
       this.games = resp.result.filter(g => g.event_date === this.dateGames);
+      console.log(this.games);
       this.analize();
     });
   }
@@ -62,6 +63,14 @@ export class WnbaComponent implements OnInit {
         this.analize();
         break;
     }
+  }
+
+  head2head( game: BasketGames ) {
+    this.wnbaService.getHeadToHead( game.home_team_key, game.away_team_key )
+    .subscribe((res: any) => {
+      console.log(res);
+      game.h2hGames = res.result.H2H;
+    });
   }
 
 }

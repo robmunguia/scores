@@ -21,6 +21,12 @@ export class NbaService {
     return this.http.get(query);
   }
 
+  getHeadToHead( homeKey: string, awayKey: string ) {
+    const _url: string = 'https://allsportsapi.com/api/basketball/';
+    const query: string = `${_url}?met=H2H&APIkey=${this.apiKey}&firstTeamId=${homeKey}&secondTeamId=${awayKey}&timezone=${this.timeZone}`;
+    return this.http.get(query);
+  }
+
 
   getFormatDay( date: Date ): string {
     return ('0' + date.getDate()).slice(-2);

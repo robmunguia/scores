@@ -16,8 +16,8 @@ export class BblComponent implements OnInit {
   divider: number = 5;
   dateGames = moment(new Date()).format('yyyy-MM-DD');
   maxDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
-  midDate = moment(new Date(), "DD-MM-YYYY").add(1, 'days').format('MMM DD');
   endDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('MMM DD');
+  midDate = moment(new Date(), "DD-MM-YYYY").add(1, 'days').format('MMM DD');
   selectedDate: string = 'TODAY';
 
   constructor(private bblService: BblService) { }
@@ -37,6 +37,7 @@ export class BblComponent implements OnInit {
   }
 
   analize() {
+    this.games = [];
     this.games.forEach(item => {
       BasketUtil.getLastGames( item.home_team_key, true, item, this.monthGames, this.dateGames, this.divider );
       BasketUtil.getLastGames( item.away_team_key, false, item, this.monthGames, this.dateGames, this.divider );
@@ -48,10 +49,7 @@ export class BblComponent implements OnInit {
       case 0:
         this.selectedDate = 'TODAY';
         // get games
-        this.games = [];
         this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
-        console.log(this.games);
-        this.analize();
         break;
       default:
         const realDate = moment(new Date(), "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
@@ -59,8 +57,6 @@ export class BblComponent implements OnInit {
         // get games
         this.games = [];
         this.games = this.monthGames.filter(g => g.event_date === realDate);
-        console.log(this.games);
-        this.analize();
         break;
     }
   }

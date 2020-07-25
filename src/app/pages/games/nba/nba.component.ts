@@ -14,14 +14,14 @@ export class NbaComponent implements OnInit {
   monthGames: any[];
   games: BasketGames[];
   divider: number = 5;
-  actualDate: Date = new Date(2020, 2, 10);
+  actualDate: Date = new Date();
   dateGames = moment(this.actualDate).format('yyyy-MM-DD');
   maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
   midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
   endDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('MMM DD');
   selectedDate: string = 'TODAY';
 
-  constructor(private dataService: NbaService) {
+  constructor(private nbaService: NbaService) {
   }
 
   ngOnInit() {
@@ -29,11 +29,10 @@ export class NbaComponent implements OnInit {
   }
 
   getGames() {
-    this.dataService.getTodayGames( this.maxDate )
+    this.nbaService.getTodayGames( this.maxDate )
     .subscribe((resp: any) => {
       this.monthGames = resp.result;
-      const _date = moment('2020-03-06').format('yyyy-MM-DD');
-      this.games = resp.result.filter(g => g.event_date === _date);
+      this.games = resp.result.filter(g => g.event_date === this.dateGames);
       this.analize();
     });
   }
@@ -63,6 +62,14 @@ export class NbaComponent implements OnInit {
         this.analize();
         break;
     }
+  }
+
+  head2head( game: BasketGames ) {
+    this.nbaService.getHeadToHead( game.home_team_key, game.away_team_key )
+    .subscribe((res: any) => {
+      console.log(res);
+      game.h2hGames = res.result.H2H;
+    });
   }
 
 }

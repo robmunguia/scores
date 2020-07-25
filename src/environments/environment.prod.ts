@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiKey: '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8',
+  // apiKey: '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8',
+  apiKey: 'a4a5a52747324f2a7b2172fce108de529e35629bedccc493724c03253acbc08e',
   url: 'https://allsportsapi.com/api/basketball/?met=Fixtures&',
   timeZone: 'America/New_York',
   firebase: {
