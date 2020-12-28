@@ -50,6 +50,8 @@ export class NbaComponent implements OnInit {
         this.selectedDate = 'TODAY';
         // get games
         this.games = [];
+        this.games.filter( g => g.analizeAwayGames = []);
+        this.games.filter( g => g.analizeHomeGames = []);
         this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
         this.analize();
         break;
@@ -57,6 +59,8 @@ export class NbaComponent implements OnInit {
         const realDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
         this.selectedDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
         // get games
+        this.games.filter( g => g.analizeAwayGames = []);
+        this.games.filter( g => g.analizeHomeGames = []);
         this.games = [];
         this.games = this.monthGames.filter(g => g.event_date === realDate);
         this.analize();

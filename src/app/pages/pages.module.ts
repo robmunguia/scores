@@ -8,6 +8,7 @@ import { ServiceModule } from '../services/service.module';
 import { PagesRouteModule } from './pages.routes';
 
 import { TabModule } from 'angular-tabs-component';
+import { FormsModule } from '@angular/forms';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -18,6 +19,7 @@ import { NcaabComponent } from './games/ncaab/ncaab.component';
 import { NbaComponent } from './games/nba/nba.component';
 import { BblComponent } from './games/bbl/bbl.component';
 import { CflComponent } from './games/cfl/cfl.component';
+import { FilterCountryComponent } from './leagues/filter-country/filter-country.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { CflComponent } from './games/cfl/cfl.component';
     NcaabComponent,
     NbaComponent,
     BblComponent,
-    CflComponent
+    CflComponent,
+    FilterCountryComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,7 @@ import { CflComponent } from './games/cfl/cfl.component';
     SharedModule,
     ServiceModule,
     TabModule,
+    FormsModule
   ]
 })
 export class PagesModule { }

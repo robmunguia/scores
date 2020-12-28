@@ -9,6 +9,7 @@ import { NcaabComponent } from './games/ncaab/ncaab.component';
 import { NbaComponent } from './games/nba/nba.component';
 import { BblComponent } from './games/bbl/bbl.component';
 import { CflComponent } from './games/cfl/cfl.component';
+import { FilterCountryComponent } from './leagues/filter-country/filter-country.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
             { path: 'leagues', component: LeaguesComponent },
             { path: 'bbl', component: BblComponent },
             { path: 'cfl', component: CflComponent },
+            { path: 'filters', component: FilterCountryComponent },
             { path: '', redirectTo: '/leagues', pathMatch: 'full' },
         ]
     }

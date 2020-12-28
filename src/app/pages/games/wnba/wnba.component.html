@@ -12,8 +12,13 @@
     </div>
 </div>
 <hr />
-<div class="row">
-    <div class="col-lg-8 col-center">
+<div *ngIf="games.length === 0" class="row">
+    <div class="col-md-12">
+        <h1 class="text-center"> No games for today!</h1>
+    </div>
+</div>
+<div *ngIf="games.length > 0" class="row">
+    <div class="col-lg-10 col-center">
         <table class="table table-sm">
             <thead class="thead-dark">
                 <tr>
@@ -68,7 +73,7 @@
                                 </a>
                                 <!-- Card Content - Collapse -->
                                 <div class="collapse" [id]="game.event_home_team.substring(0,3).replace(' ','')+game.event_away_team.substring(0,3).replace(' ','')">
-                                    <div class="card-body">
+                                    <div class="card-body body-games">
                                         <tabs class="tabs">
                                             <tab tabTitle="Home">
                                                 <table class="table table-sm">

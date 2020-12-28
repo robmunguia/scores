@@ -14,3 +14,8 @@
 .rigt-panel {
     text-align: right;
 }
+
+.body-games {
+    max-height: 385px;
+    min-height: 385px;
+}

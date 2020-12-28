@@ -1,9 +1,10 @@
 export const environment = {
   production: true,
-  // apiKey: '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8',
-  apiKey: 'a4a5a52747324f2a7b2172fce108de529e35629bedccc493724c03253acbc08e',
+  apiKey: '3b77bff0f2fe648091566b1db5d4e745588c0fff852d682f1143a57e03e107a8',
+  soccerApiKey: 'b7230e90-4575-11eb-ade1-eff1d2c3fd42',
+  // apiKey: 'a4a5a52747324f2a7b2172fce108de529e35629bedccc493724c03253acbc08e',
   url: 'https://allsportsapi.com/api/basketball/?met=Fixtures&',
-  timeZone: 'America/New_York',
+  timeZone: 'America/Los_Angeles',
   firebase: {
     apiKey: "AIzaSyCeKqEkqQU4MoyizhgF9OVVZwldz_yyMcY",
     authDomain: "scores-99cfa.firebaseapp.com",
