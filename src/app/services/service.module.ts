@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 
 import { NCAABService } from './service.index';
+import { SoccerService } from './soccer.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { NCAABService } from './service.index';
       useClass: TokenInterceptor,
       multi: true
     },
-    NCAABService
+    NCAABService,
+    SoccerService
   ],
   declarations: []
 })

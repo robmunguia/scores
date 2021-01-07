@@ -20,6 +20,8 @@ import { NbaComponent } from './games/nba/nba.component';
 import { BblComponent } from './games/bbl/bbl.component';
 import { CflComponent } from './games/cfl/cfl.component';
 import { FilterCountryComponent } from './leagues/filter-country/filter-country.component';
+import { SerieAComponent } from './soccer/serieA/serieA.component';
+import { BundesligaComponent } from './soccer/bundesliga/bundesliga.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { FilterCountryComponent } from './leagues/filter-country/filter-country.
     NbaComponent,
     BblComponent,
     CflComponent,
-    FilterCountryComponent
+    FilterCountryComponent,
+    SerieAComponent,
+    BundesligaComponent
   ],
   imports: [
     CommonModule,

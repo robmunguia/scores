@@ -1,0 +1,38 @@
+.col-center {
+    float: none;
+    margin: auto;
+}
+
+.team-logo {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+.loader {
+    font-size: 5rem;
+}
+
+.result {
+    color: #31A80E;
+}
+
+.avg-icons {
+    color:black;
+    font-size: 1.2rem;
+}
+
+.card-soccer {
+    margin-left: -6px;
+}
+
+.corner-display {
+    display: flex;
+}
+.corner-right {
+    float: right;
+}
+.corner {
+    width: 26px;
+    margin-left: -6px;
+}

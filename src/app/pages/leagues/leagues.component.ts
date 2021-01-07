@@ -14,7 +14,9 @@ export class LeaguesComponent implements OnInit {
               { id: '4', title: 'WNBA', route: 'wnba', img: 'assets/images/wnba.png' },
               { id: '5', title: 'CFL', route: 'cfl', img: 'assets/images/cfl_logo.jpg' },
               { id: '6', title: 'BBL', route: 'bbl', img: 'assets/images/bbl.png' },
-              { id: '7', title: 'Find Basket', route: 'filters', img: 'assets/images/find.png' } ];
+              { id: '7', title: 'Find Basket', route: 'filters', img: 'assets/images/find.png' },
+              { id: '8', title: 'Italy', route: 'serieA', img: 'assets/images/serie-a.png' },
+              { id: '9', title: 'Germany', route: 'bundesliga', img: 'assets/images/bundesliga.png' } ];
 
   constructor(private route: Router) { }
 

@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-6">
+        <h1> Serie A {{ serieA.name }} </h1>
+    </div>
+    <div class="col-6 text-right">
+        <a href="#" class="btn btn-secondary" [routerLink] = "'/leagues'" >Leagues</a>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-8 col-center">
+        <div class="text-center loader">
+            <i *ngIf="!currentGames" class="fas fa-spinner fa-spin"></i>
+        </div>
+        <table *ngIf="currentGames" class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Home</th>
+                    <th></th>
+                    <th class="text-center">Away</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let game of currentGames">
+                    <tr>
+                        <!-- Home -->
+                        <td>
+                            <div>
+                                <img class="team-logo" [src]="game.home_team.logo" [alt]="game.home_team.short_code">
+                                {{ game.home_team.name }}
+                            </div>
+                            <div><i class="fas fa-futbol avg-icons"></i> {{ game.homeGoals | number }} </div>
+                            <div class="card-soccer"><img src="https://img.icons8.com/windows/25/000000/red-yellow-cards.png"/> 0 </div>
+                            <div class="corner-display">
+                                <div class="corner">
+                                    <img src="assets/images/corners.svg"/>
+                                </div>&nbsp;
+                                <div> 0 </div>
+                            </div>
+                        </td>
+                        <!-- Averages -->
+                        <td class="text-center">
+                            <div><span> {{ game.homeGoals + game.awayGoals | number }} </span></div>
+                            <div><span *ngIf="game.status_code === 3" class="result"> {{ game.stats.ft_score }} </span></div>
+                            <div><i class="far fa-calendar"></i> {{ game.match_start | date: 'MMM-dd' }}</div>
+                        </td>
+                        <!-- Away -->
+                        <td class="text-right">
+                            <div>
+                                {{ game.away_team.name }}
+                                <img class="team-logo" [src]="game.away_team.logo" [alt]="game.away_team.short_code">
+                            </div>
+                            <div><i class="fas fa-futbol avg-icons"></i> {{ game.awayGoals | number }} </div>
+                            <div class="card-soccer"><img src="https://img.icons8.com/windows/25/000000/red-yellow-cards.png"/> 0 </div>
+                            <div class="corner-display corner-right">
+                                <div class="corner">
+                                    <img src="assets/images/corners.svg"/>
+                                </div>
+                                <div> 0 </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
