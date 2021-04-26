@@ -8,7 +8,7 @@ export const environment = {
   soccerApiKey: 'b7230e90-4575-11eb-ade1-eff1d2c3fd42',
   // apiKey: 'a4a5a52747324f2a7b2172fce108de529e35629bedccc493724c03253acbc08e',
   url: 'https://allsportsapi.com/api/basketball/?met=Fixtures&',
-  timeZone: 'America/Los_Angeles',
+  timeZone: 'America/Tijuana',
   firebase: {
     apiKey: "AIzaSyCeKqEkqQU4MoyizhgF9OVVZwldz_yyMcY",
     authDomain: "scores-99cfa.firebaseapp.com",

@@ -42,7 +42,6 @@ export class BundesligaComponent implements OnInit {
       this.avgGames( game, true );
       this.avgGames( game, false );
     });
-    console.log(this.currentGames);
   }
 
   avgGames( game: SoccerGames, isHome: boolean ) {
