@@ -117,8 +117,13 @@
               "devServerTarget": "scores:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "scores"
 }

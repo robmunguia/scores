@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "scores",
+      "public": "dist/scores",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
