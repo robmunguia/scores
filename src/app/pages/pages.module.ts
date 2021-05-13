@@ -7,7 +7,7 @@ import { ServiceModule } from '../services/service.module';
 // Rutas
 import { PagesRouteModule } from './pages.routes';
 
-import { TabModule } from 'angular-tabs-component';
+// import { TabModule } from 'angular-tabs-component';
 import { FormsModule } from '@angular/forms';
 
 // Componentes
@@ -35,15 +35,14 @@ import { BundesligaComponent } from './soccer/bundesliga/bundesliga.component';
     CflComponent,
     FilterCountryComponent,
     SerieAComponent,
-    BundesligaComponent
+    BundesligaComponent,
   ],
   imports: [
     CommonModule,
     PagesRouteModule,
     SharedModule,
     ServiceModule,
-    TabModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class PagesModule { }
