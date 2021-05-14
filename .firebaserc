@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "myscores-f9927": {
+      "hosting": {
+        "scores": [
+          "myscores-f9927"
+        ]
+      }
+    }
+  }
+}

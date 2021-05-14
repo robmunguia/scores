@@ -5,12 +5,13 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: './pages/pages.module#PagesModule', canActivate: [AuthGuard] },
+  { path: '', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule), canActivate: [AuthGuard] },
   { path: 'login', component: AuthComponent },
 ];
 
 const config: ExtraOptions = {
-  useHash: true,
+    useHash: true,
+    relativeLinkResolution: 'legacy'
 };
 
 @NgModule({

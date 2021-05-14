@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BblService } from '../../../services/bbl.service';
+import { BasketService } from '../../../services/basket.service';
 import * as moment from 'moment';
-import { BasketUtil } from '../game.util';
-import { BasketGames } from '../../../models/games.model';
+import { basketCountry, basketLeagues, basketGames } from '../../../models/basket/league.model';
+import { BasketUtil } from '../basket.util';
 
 @Component({
   selector: 'app-bbl',
@@ -11,36 +11,99 @@ import { BasketGames } from '../../../models/games.model';
 })
 export class BblComponent implements OnInit {
 
-  monthGames: any[];
-  games: BasketGames[];
-  divider: number = 5;
-  dateGames = moment(new Date()).format('yyyy-MM-DD');
-  maxDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
-  midDate = moment(new Date(), "DD-MM-YYYY").add(1, 'days').format('MMM DD');
-  endDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('MMM DD');
+  // dates
+  actualDate: Date = new Date();
+  dateGames = moment(this.actualDate).format('yyyy-MM-DD');
+  maxDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
+  midDate = moment(this.actualDate, "DD-MM-YYYY").add(1, 'days').format('MMM DD');
+  endDate = moment(this.actualDate, "DD-MM-YYYY").add(2, 'days').format('MMM DD');
   selectedDate: string = 'TODAY';
 
-  constructor(private bblService: BblService) { }
+  // filters
+  payment: string = '';
+  countries: basketCountry[] = null;
+  leagues: basketLeagues[] = null;
+  countryLeagues: basketLeagues[] = null;
+  countryId: number = 1;
+  league: basketLeagues;
+  leagueId: number;
+  activeLeague: boolean = false;
 
-  ngOnInit() {
-    this.getGames();
+  // games
+  games: basketGames[];
+  currentGames: basketGames[];
+  currentDate: Date = new Date();
+
+  constructor(private basketservices: BasketService) {
+    this.getCountries();
+    this.getLeagues();
   }
 
+  ngOnInit() {
+  }
+
+  getCountries() {
+    this.basketservices.getCountries()
+    .subscribe((data: any) => {
+      this.countries = data.response;
+    });
+  }
+  getLeagues() {
+    this.basketservices.getLeagues()
+    .subscribe((data: any) => {
+      this.leagues = data.response;
+      this.getLeagueByCountry();
+    });
+  }
+
+  getLeagueByCountry() {
+    this.countryLeagues = null;
+    this.countryLeagues = this.leagues.filter(l => l.country.id === Number(this.countryId));
+    this.league = this.countryLeagues[0];
+    this.leagueId = this.league.id;
+    this.isLeagueActive();
+  }
+
+  leagueChange() {
+    this.league = this.countryLeagues.filter(l => l.id === Number(this.leagueId))[0];
+    this.isLeagueActive();
+  }
+
+  isLeagueActive() {
+    this.activeLeague = false;
+    if (this.league) {
+      const season = this.league.seasons.filter(s =>
+        moment(new Date()).format('yyyy-MM-DD') >= moment(s.start).format('yyyy-MM-DD')
+        && moment(new Date()).format('yyyy-MM-DD') <= moment(s.end).format('yyyy-MM-DD')
+        )[0];
+      if ( season ) {
+        this.activeLeague = true;
+        this.league.currentSeason = season.season;
+      }
+    }
+  }
+
+
   getGames() {
-    this.maxDate = moment(new Date(), "DD-MM-YYYY").add(2, 'days').format('yyyy-MM-DD');
-    this.bblService.getTodayGames( this.maxDate )
-    .subscribe((resp: any) => {
-      this.monthGames = resp.result;
-      this.games = resp.result.filter(g => g.event_date === this.dateGames);
+    this.basketservices.getGames( this.league )
+    .subscribe((data: any) => {
+      this.games = data.response;
+      this.selectedDate = 'TODAY';
+      // get the current games
+      this.currentGames = this.games.filter(x => moment(this.currentDate).format('yyyy-MM-DD') === moment(new Date(x.date)).format('yyyy-MM-DD'));
       this.analize();
     });
   }
 
   analize() {
-    this.games.forEach(item => {
-      BasketUtil.getLastGames( item.home_team_key, true, item, this.monthGames, this.dateGames, this.divider );
-      BasketUtil.getLastGames( item.away_team_key, false, item, this.monthGames, this.dateGames, this.divider );
+    this.currentGames.forEach( game => {
+      this.avgGames( game, true );
+      this.avgGames( game, false );
     });
+  }
+
+  avgGames( game: basketGames, isHome: boolean ) {
+    BasketUtil.avgGames( game, isHome, this.games );
   }
 
   changeDate( addDays: number ) {
@@ -48,29 +111,22 @@ export class BblComponent implements OnInit {
       case 0:
         this.selectedDate = 'TODAY';
         // get games
-        this.games = [];
-        this.games = this.monthGames.filter(g => g.event_date === this.dateGames);
-        console.log(this.games);
+        this.currentGames = [];
+        this.currentGames = this.games.filter(g => moment(g.date).format('yyyy-MM-DD') === this.dateGames);
         this.analize();
         break;
       default:
-        const realDate = moment(new Date(), "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
-        this.selectedDate = moment(new Date(), "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
+        const realDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('yyyy-MM-DD');
+        this.selectedDate = moment(this.actualDate, "DD-MM-YYYY").add(addDays, 'days').format('MMM DD');
         // get games
-        this.games = [];
-        this.games = this.monthGames.filter(g => g.event_date === realDate);
-        console.log(this.games);
+        this.currentGames = [];
+        this.currentGames = this.games.filter(g => moment(g.date).format('yyyy-MM-DD') === realDate);
         this.analize();
         break;
     }
   }
 
-  head2head( game: BasketGames ) {
-    this.bblService.getHeadToHead( game.home_team_key, game.away_team_key )
-    .subscribe((res: any) => {
-      console.log(res);
-      game.h2hGames = res.result.H2H;
-    });
+  head2head( game: any ) {
   }
 
 }
