@@ -14,10 +14,16 @@ export class NCAABService {
   constructor(private http: HttpClient) { }
 
   getTodayGames( maxDate: string) {
-    const _from = '2020-01-01';
+    const _from = '2020-11-25';
     const _to = maxDate;
     const _league = '792';
     const query: string = `${this.url}APIkey=${this.apiKey}&from=${_from}&to=${_to}&timezone=${this.timeZone}&leagueId=${_league}`;
+    return this.http.get(query);
+  }
+
+  getHeadToHead( homeKey: string, awayKey: string ) {
+    const _url: string = 'https://allsportsapi.com/api/basketball/';
+    const query: string = `${_url}?met=H2H&APIkey=${this.apiKey}&firstTeamId=${homeKey}&secondTeamId=${awayKey}&timezone=${this.timeZone}`;
     return this.http.get(query);
   }
 

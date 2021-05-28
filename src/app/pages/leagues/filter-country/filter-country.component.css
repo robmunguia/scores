@@ -1,0 +1,25 @@
+.margin {
+    margin: 5px;
+}
+
+.team-logo {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+.col-center {
+    float: none;
+    margin: auto;
+}
+.odds {
+    color: #31A80E;
+}
+.rigt-panel {
+    text-align: right;
+}
+
+.body-games {
+    max-height: 350px;
+    min-height: 350px;
+}

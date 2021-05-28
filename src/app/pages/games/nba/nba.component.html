@@ -12,8 +12,21 @@
     </div>
 </div>
 <hr />
-<div class="row">
-    <div class="col-lg-8 col-center">
+
+<div class="row" *ngIf="payment !== ''">
+    <div class="col-md-12">
+
+        <h2 class="text-center"> {{ payment }} </h2>
+
+    </div>
+</div>
+
+<div class="text-center loader">
+    <i *ngIf="!currentGames" class="fas fa-spinner fa-spin"></i>
+</div>
+
+<div class="row" *ngIf="payment === ''">
+    <div *ngIf="currentGames" class="col-lg-8 col-center">
         <table class="table table-sm">
             <thead class="thead-dark">
                 <tr>
@@ -24,40 +37,101 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let game of games; let i = index">
-                    <td>
-                        <div>
-                            <img class="team-logo" [src]="game.event_home_team_logo" alt="SMU">
-                            {{ game.event_home_team }}
-                        </div>
-                        <div>
-                            <span>
-                                {{ game.homeAveragePoints | number }}
-                            </span>
-                        </div>
-                        <div>
-                            <span> {{ game.homeAveragePoints - game.awayAveragePoints | number }}  </span> &nbsp;
-                        </div>
-                    </td>
-                    <td>
-                        <div><span> {{ game.homeAveragePoints + game.awayAveragePoints | number }} </span></div>
-                        <span *ngIf="game.event_status === 'Finished'" class="odds"> {{ game.event_final_result }} </span>
-                    </td>
-                    <td class="rigt-panel">
-                        <div>
-                            <img class="team-logo" [src]="game.event_away_team_logo" alt="away">
-                            {{ game.event_away_team }}
-                        </div>
-                        <div>
-                            <span>
-                                {{ game.awayAveragePoints | number }}
-                            </span>
-                        </div>
-                        <div>
-                            {{ game.awayAveragePoints - game.homeAveragePoints | number }}
-                        </div>
-                    </td>
-                </tr>
+                <ng-container *ngFor="let game of currentGames; let i = index">
+                    <tr>
+                        <td>
+                            <div>
+                                <img class="team-logo" width="30px" height="30px" [src]="game.teams.home.logo" [alt]="game.teams.home.name">
+                                {{ game.teams.home.name }}
+                            </div>
+                            <div>
+                                <span>
+                                    {{ game.homeGoals | number }}
+                                </span>
+                            </div>
+                            <div>
+                                <span> {{ game.homeGoals - game.awayGoals | number }}  </span> &nbsp;
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div><span> {{ game.homeGoals + game.awayGoals | number }}  </span></div>
+                            <span *ngIf="game.status.short === 'FT'" class="odds"> {{ game.scores.home.total }} - {{ game.scores.away.total }} </span>
+                            <div>
+                                <span>
+                                    <i class="far fa-clock"></i>
+                                    {{ game.time }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="rigt-panel">
+                            <div>
+                                <img class="team-logo" width="30px" height="30px" [src]="game.teams.away.logo" [alt]="game.teams.away.name">
+                                {{ game.teams.away.name }}
+                            </div>
+                            <div>
+                                <span>
+                                    {{ game.awayGoals | number }}
+                                </span>
+                            </div>
+                            <div>
+                                <span> {{ game.awayGoals - game.homeGoals | number }}  </span> &nbsp;
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion (click)="head2head( game )"  -->
+                                <a [href]="'#'+game.teams.home.name.substring(0,3).replace(' ','')+game.teams.away.name.substring(0,3).replace(' ','')"   class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseble">
+                                    <h6 class="m-0 font-weight-bold text-primary">History Details</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse" [id]="game.teams.home.name.substring(0,3).replace(' ','')+game.teams.away.name.substring(0,3).replace(' ','')">
+                                    <div class="card-body body-games">
+                                        <!-- <tabs class="tabs">
+                                            <tab tabTitle="Home">
+                                                <table class="table table-sm">
+                                                    <tbody>
+                                                        <tr *ngFor="let homeGames of game.analizeHomeGames">
+                                                            <td class="date"> {{ homeGames.date | date:'yy/MM/dd' }} </td>
+                                                            <td [ngClass]="{ 'team': game.teams.home.name === homeGames.teams.home.name }"> {{ homeGames.teams.home.name }} </td>
+                                                            <td> {{ homeGames.scores.home.total }}:{{ homeGames.scores.away.total }}</td>
+                                                            <td [ngClass]="{ 'team': game.teams.home.name ===  homeGames.teams.away.name }"> {{ homeGames.teams.away.name }}</td>
+                                                            <td class="win-lose">
+                                                                <div [ngClass]="homeGames.win">
+                                                                    {{ homeGames.win }}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </tab>
+                                            <tab tabTitle="Away">
+                                                <table class="table table-sm">
+                                                    <tbody>
+                                                        <tr *ngFor="let awayGames of game.analizeAwayGames">
+                                                            <td class="date"> {{ awayGames.date | date:'yy/MM/dd' }} </td>
+                                                            <td [ngClass]="{ 'team': game.teams.away.name ===  awayGames.teams.home.name }"> {{ awayGames.teams.home.name }} </td>
+                                                            <td class="results"> {{ awayGames.scores.home.total }}:{{ awayGames.scores.away.total }}</td>
+                                                            <td [ngClass]="{ 'team': game.teams.away.name ===  awayGames.teams.away.name }"> {{ awayGames.teams.away.name }}</td>
+                                                            <td class="win-lose">
+                                                                <div [ngClass]="awayGames.win">
+                                                                    {{ awayGames.win }}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </tab>
+                                            <tab tabTitle="H2H">
+                                            </tab>
+                                        </tabs> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>

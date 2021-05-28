@@ -18,14 +18,14 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser() {
-    this.authService.userData
-    .subscribe((user: any) => {
-      if ( user ) {
-        this.email = user.email;
-      } else {
-        this.email = '';
-      }
-    });
+    // this.authService.userData
+    // .subscribe((user: any) => {
+    //   if ( user ) {
+    //     this.email = user.email;
+    //   } else {
+    //     this.email = '';
+    //   }
+    // });
   }
 
   singOut() {

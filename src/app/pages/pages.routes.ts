@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
 // components
 import { PagesComponent } from './pages.component';
@@ -8,6 +8,11 @@ import { WnbaComponent } from './games/wnba/wnba.component';
 import { NcaabComponent } from './games/ncaab/ncaab.component';
 import { NbaComponent } from './games/nba/nba.component';
 import { BblComponent } from './games/bbl/bbl.component';
+import { CflComponent } from './games/cfl/cfl.component';
+import { FilterCountryComponent } from './leagues/filter-country/filter-country.component';
+import { SerieAComponent } from './soccer/serieA/serieA.component';
+import { BundesligaComponent } from './soccer/bundesliga/bundesliga.component';
+import { AuthGuard } from '../guard/auth.guard';
 
 const routes: Routes = [
     {
@@ -19,8 +24,12 @@ const routes: Routes = [
             { path: 'nba', component: NbaComponent },
             { path: 'leagues', component: LeaguesComponent },
             { path: 'bbl', component: BblComponent },
-            { path: '', redirectTo: '/leagues', pathMatch: 'full'  },
-        ]
+            { path: 'cfl', component: CflComponent },
+            { path: 'filters', component: FilterCountryComponent },
+            { path: 'serieA', component: SerieAComponent },
+            { path: 'bundesliga', component: BundesligaComponent },
+            { path: '', redirectTo: '/leagues', pathMatch: 'full' },
+        ], canActivate: [AuthGuard]
     }
 ];
 
