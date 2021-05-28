@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { UserRegister } from '../models/user/user.model';
+import { UserLogin } from '../models/user/userLogin.model';
+import { UserReponse } from '../models/user/userResponse.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthenticationService {
-  userData: Observable<firebase.User>;
-  isLogin: boolean = false;
 
-  constructor(private angularFireAuth: AngularFireAuth) {
+  isLogin: boolean = false;
+  url = environment.urlMiklo;
+
+  constructor(private http: HttpClient, public router: Router) {
     this.loadStorage();
-    this.userData = angularFireAuth.authState;
   }
 
   isAuthenticated(): boolean {
@@ -20,46 +24,49 @@ export class AuthenticationService {
   }
 
   /* Sign up */
-  SignUp(email: string, password: string) {
-    return this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      return user;
-    })
-    .catch(error => {
-      throw error
-    });
+  userLogin(userLogin: UserLogin) {
+      return this.http.get(`${this.url}SecureApp/LogInApp?user=${userLogin.user}&password=${userLogin.password}`)
+      .toPromise()
+      .then((response: any) => {
+        if(response.Ok){
+          this.saveStorage(response);
+          this.isLogin = true;
+          this.router.navigate(['/']);
+        } else {
+          console.log(response.Mensaje);
+        }
+      });
   }
 
   /* Sign in */
-  SignIn(email: string, password: string) {
-    return this.angularFireAuth.signInWithEmailAndPassword(email, password)
-    .then((data) => {
-      this.isLogin = true;
-      this.saveStorage( data.user.email );
-      return data;
-    })
-    .catch(error => {
-      throw error;
-    });
+  userRegister(userRegister: UserRegister) {
+    return this.http.post(`${this.url}SecureApp/RegistrarUsuarioApp`, userRegister);
   }
 
   /* Sign out */
   SignOut() {
     this.isLogin = false;
-    localStorage.removeItem('email');
-    this.angularFireAuth.signOut();
+    localStorage.removeItem('user');
   }
 
-  saveStorage( email: string ) {
-    localStorage.setItem('email', email);
+  saveStorage( user: UserReponse ) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   loadStorage() {
-    if ( localStorage.getItem('email') ) {
+    const user: UserReponse = JSON.parse(localStorage.getItem('user'));
+    if ( localStorage.getItem('user') ) {
       this.isLogin = true;
     } else {
       this.isLogin = false;
     }
+  }
+
+  validUserName(username: string) {
+    this.http.get(`${this.url}SecureApp/ExisteUsuario?usuario=${username}`);
+  }
+  validPhoneNumber(phone: string) {
+    this.http.get(`${this.url}SecureApp/ExisteTelefono?telefono=${phone}`);
   }
 
 }

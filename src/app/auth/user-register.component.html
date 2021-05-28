@@ -1,0 +1,58 @@
+<form class="rd-form rd-mailform" [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="form-wrap">
+      <input type="text" class="form-input form-control-has-validation form-control-last-child" placeholder="Usuario" formControlName="User">
+      <span class="text-danger"
+          *ngIf="(registerFormControl.User.touched || submitted) && registerFormControl.User.errors?.required">
+          Nombre de usuario es requerido
+      </span>
+      <span class="text-danger"
+          *ngIf="registerFormControl.User.touched && registerFormControl.User.errors?.userNameNotAvailable">
+          El nombre de Usuario no esta disponible
+      </span>
+    </div>
+    <div class="form-wrap">
+      <input type="email" class="form-input form-control-has-validation form-control-last-child" placeholder="Correo" formControlName="Email">
+      <span class="text-danger"
+          *ngIf="(registerFormControl.Email.touched || submitted) && registerFormControl.Email.errors?.required">
+          Correo es Requerido
+      </span>
+      <span class="text-danger"
+          *ngIf="(registerFormControl.Email.touched || submitted) && registerFormControl.Email.errors?.email">
+          Correo inválido
+      </span>
+      <span class="text-danger"
+          *ngIf="registerFormControl.Email.touched && registerFormControl.Email.errors?.emailNotAvailable">
+          El Correo ya se encuentra registrado
+      </span>
+    </div>
+    <div class="form-wrap">
+      <input type="phone" class="form-input form-control-has-validation form-control-last-child" placeholder="Teléfono" formControlName="Phone">
+      <span class="text-danger"
+          *ngIf="(registerFormControl.Phone.touched || submitted) && registerFormControl.Phone.errors?.required">
+          El teléfono es requerido
+      </span>
+      <span class="text-danger"
+          *ngIf="registerFormControl.Email.touched && registerFormControl.Phone.errors?.phoneNotAvailable">
+          El teléfono ya se encuentra registrado
+      </span>
+    </div>
+    <div class="form-wrap">
+      <input type="password" class="form-input form-control-has-validation form-control-last-child" placeholder="Password" formControlName="Password">
+      <span class="text-danger"
+          *ngIf="(registerFormControl.Password.touched || submitted) && registerFormControl.Password.errors?.required">
+          La contraseña es requerida
+      </span>
+    </div>
+    <div class="form-wrap">
+      <input type="password" class="form-input form-control-has-validation form-control-last-child" placeholder="Confirmar Password" formControlName="ConfirmaPassword">
+      <span class="text-danger"
+          *ngIf="(registerFormControl.ConfirmaPassword.touched || submitted) && registerFormControl.ConfirmaPassword.errors?.required">
+          La confirmación de contraseña es requerida
+      </span>
+      <span class="text-danger"
+          *ngIf="registerFormControl.ConfirmaPassword.touched && registerFormControl.ConfirmaPassword.errors?.passwordMismatch">
+          Las contraseñas no coinciden
+      </span>
+    </div>
+    <button class="button button-lg button-primary button-block" type="submit">Crear nueva cuenta</button>
+  </form>

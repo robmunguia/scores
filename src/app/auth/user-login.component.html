@@ -1,0 +1,12 @@
+<form class="rd-form rd-mailform" novalidate="novalidate">
+    <div class="form-wrap">
+      <input class="form-input form-control-has-validation form-control-last-child" placeholder="Usuario" [(ngModel)]="user.user" id="usuario" type="text" name="form-input" data-constraints="@Required"><span class="form-validation"></span>
+    </div>
+    <div class="form-wrap">
+      <input class="form-input form-control-has-validation form-control-last-child" placeholder="Contraseña" [(ngModel)]="user.password" id="password" type="password" name="password" data-constraints="@Required"><span class="form-validation"></span>
+    </div>
+    <label class="checkbox-inline checkbox-inline-lg checkbox-light">
+      <input name="input-checkbox-1" value="checkbox-1" type="checkbox" class="checkbox-custom"><span class="checkbox-custom-dummy"></span>Recordar Usuario
+    </label>
+    <button class="button button-lg button-primary button-block" (click)="signIn()" type="submit">Ingresar</button>
+</form>
