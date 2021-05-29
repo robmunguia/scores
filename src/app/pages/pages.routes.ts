@@ -12,6 +12,7 @@ import { CflComponent } from './games/cfl/cfl.component';
 import { FilterCountryComponent } from './leagues/filter-country/filter-country.component';
 import { SerieAComponent } from './soccer/serieA/serieA.component';
 import { BundesligaComponent } from './soccer/bundesliga/bundesliga.component';
+import { TopBasketComponent } from './top-basket/top-basket.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,7 @@ const routes: Routes = [
             { path: 'filters', component: FilterCountryComponent },
             { path: 'serieA', component: SerieAComponent },
             { path: 'bundesliga', component: BundesligaComponent },
+            { path: 'topBasket', component: TopBasketComponent },
             { path: '', redirectTo: '/leagues', pathMatch: 'full' },
         ]
     }

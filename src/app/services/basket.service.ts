@@ -33,6 +33,9 @@ export class BasketService {
   getGames( league: basketLeagues ) {
     const url: string = `${this.urlRoot}games?season=${league.currentSeason}&&timezone=${this.timeZone}&league=${league.id}`;
     return this.http.get( url );
-    // return this.http.get( './assets/mock.data.json' );
+  }
+  getCurrentGames( date: string ) {
+    const url: string = `${this.urlRoot}games?&timezone=${this.timeZone}&date=${date}`;
+    return this.http.get( url );
   }
 }

@@ -29,13 +29,19 @@ export interface basketGames {
     status: basketStatus,
     teams: basketTeams,
     scores: basketScores,
-
+    league: basketLeagues,
 
     // custom properties
     analizeHomeGames: any,
     analizeAwayGames: any,
     homeGoals: number,
     awayGoals: number,
+
+    // topScores
+    localIsTopScore: boolean,
+    localTopScoreTotal: number,
+    awayIsTopScore: boolean,
+    awayTopScoreTotal: number,
 }
 
 export interface basketTeam {

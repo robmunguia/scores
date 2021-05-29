@@ -16,6 +16,7 @@ export class LeaguesComponent implements OnInit {
               // { id: '5', title: 'NBA', route: 'nba', img: 'assets/images/nba.png' },
               { id: '6', title: 'Germany', route: 'bundesliga', img: 'assets/images/bundesliga.png' },
               { id: '7', title: 'Italy', route: 'serieA', img: 'assets/images/serie-a.png' },
+              { id: '8', title: 'Top Streaks', route: 'topBasket', img: 'assets/images/fire.jpg' },
               // { id: '8', title: 'NCAAF', route: null, img: 'assets/images/ncaaf.jpg' },
               // { id: '9', title: 'CFL', route: 'cfl', img: 'assets/images/cfl_logo.jpg' },
             ];
