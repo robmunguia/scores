@@ -26,7 +26,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/AppCore.min.js",
+              "src/assets/js/AppScript.js"
+            ]
           },
           "configurations": {
             "production": {

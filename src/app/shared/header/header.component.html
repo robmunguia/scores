@@ -1,47 +1,229 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-      <i class="fa fa-bars"></i>
-    </button>
-
-    <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-            <!-- <i class="fas fa-search fa-sm"></i> -->
-            <i class="fa fa-search"></i>
-          </button>
+<header class="section page-header rd-navbar-dark">
+    <!-- RD Navbar-->
+    <div class="rd-navbar-wrap" style="height: 237px;">
+      <nav class="rd-navbar rd-navbar-classic rd-navbar-original rd-navbar-static" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="166px" data-xl-stick-up-offset="166px" data-xxl-stick-up-offset="166px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+        <div class="rd-navbar-panel">
+          <!-- RD Navbar Toggle-->
+          <button class="rd-navbar-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-main"><span></span></button>
+          <!-- RD Navbar Panel-->
+          <div class="rd-navbar-panel-inner container">
+            <div class="rd-navbar-panel-item rd-navbar-panel-item-left">
+              <ul class="list-inline list-inline-sm">
+                <li><a class="link link-classic" href="#">Help</a></li>
+                <li><a class="link link-classic" href="news.html">News</a></li>
+                <li><a class="link link-classic" href="contact-us.html">Contacts</a></li>
+              </ul>
             </div>
+            <div class="rd-navbar-collapse rd-navbar-panel-item rd-navbar-panel-item-right toggle-original-elements">
+              <ul class="list-inline list-inline-bordered">
+                <li>
+                  <!-- Select 2-->
+                  <div class="select2-container select select-inline select-inline-dark" id="s2id_autogen1"><a href="javascript:void(0)" class="select2-choice" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-2">en</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen2" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-2" id="s2id_autogen2"><div class="select2-drop select2-display-none select-inline-dropdown select-inline-dropdown-secondary">   <div class="select2-search select2-search-hidden select2-offscreen">       <label for="s2id_autogen2_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-2" id="s2id_autogen2_search" placeholder="">   </div>   <ul class="select2-results" role="listbox" id="select2-results-2">   </ul></div></div><select class="select select-inline select-inline-dark" data-placeholder="Select an option" data-dropdown-class="select-inline-dropdown select-inline-dropdown-secondary" tabindex="-1" title="" style="display: none;">
+                    <option value="en" selected="">en</option>
+                    <option value="fr">fr</option>
+                    <option value="es">es</option>
+                  </select>
+                </li>
+                <li><a class="badge badge-primary" href="#">registration</a></li>
+                <li><a class="link link-icon link-icon-left link-classic" href="login-page.html"><span class="icon fl-bigmug-line-login12"></span><span class="link-icon-text">Your Account</span></a></li>
+              </ul>
+            </div>
+            <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1 toggle-original" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
+          </div>
         </div>
-    </form>
-
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <div class="topbar-divider d-none d-sm-block"></div>
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ email }}</span>
-                <div class="avatar-circle">
-                    <span class="initials">TM</span>
-                </div>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-bars"></i> Settings
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" (click)="singOut()" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fa fa-sign-out-alt"></i> Logout
-                </a>
+        <div class="rd-navbar-main toggle-original-elements">
+          <div class="rd-navbar-main-top">
+            <div class="rd-navbar-main-container container">
+              <!-- RD Navbar Brand-->
+              <div class="rd-navbar-brand">
+                <!-- Brand--><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-213x82.png" alt="" width="106" height="41"><img class="brand-logo-light" src="images/logo-inverse-213x82.png" alt="" width="106" height="41"></a>
+              </div>
+              <!-- RD Navbar Search-->
+              <div class="rd-navbar-search toggle-original-elements">
+                <button class="rd-navbar-search-toggle toggle-original" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
+                <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                  <div class="form-wrap">
+                    <label class="form-label rd-input-label" for="rd-navbar-search-form-input">Enter your search request here...</label>
+                    <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                    <div class="rd-search-results-live cleared" id="rd-search-results-live"></div>
+                  </div>
+                  <button class="rd-search-form-submit fl-budicons-launch-search81" type="submit"></button>
+                </form>
+              </div>
             </div>
-        </li>
+          </div>
+          <div class="rd-navbar-main-bottom rd-navbar-darker">
+            <div class="rd-navbar-main-container container">
+              <!-- RD Navbar Nav-->
+              <ul class="rd-navbar-nav"> 
+                <li class="rd-nav-item"><a class="rd-nav-link" href="index.html">Sports</a>
+                </li>
+                <li class="rd-nav-item active"><a class="rd-nav-link" href="in-play.html">In-Play</a>
+                </li>
+                <li class="rd-nav-item"><a class="rd-nav-link" href="promotions.html">Promotions</a>
+                </li>
+                <li class="rd-nav-item"><a class="rd-nav-link" href="statistics.html">Statistics</a>
+                </li>
+                <li class="rd-nav-item"><a class="rd-nav-link" href="results.html">Results</a>
+                </li>
+                <li class="rd-nav-item rd-navbar--has-megamenu rd-navbar-submenu"><a class="rd-nav-link" href="#">Pages</a><span class="rd-navbar-submenu-toggle"></span>
+                  <!-- RD Navbar Megamenu-->
+                                                      <article class="rd-menu rd-navbar-megamenu rd-megamenu-2-columns context-light rd-navbar-open-right">
+                                                        <div class="rd-megamenu-main">
+                                                                            <div class="rd-megamenu-item rd-megamenu-item-nav">
+                                                                              <!-- Heading Component-->
+                                                                              <article class="heading-component heading-component-simple">
+                                                                                <div class="heading-component-inner">
+                                                                                  <h5 class="heading-component-title">Elements
+                                                                                  </h5>
+                                                                                </div>
+                                                                              </article>
 
-    </ul>
+                                                                              <div class="rd-megamenu-list-outer">
+                                                                                <ul class="rd-megamenu-list">
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="shortcodes.html">Shortcodes</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="typography.html">Typography</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="404-page.html">404 Page</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="coming-soon.html">Coming Soon</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="login-page.html">Login Page</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="team-overview.html">Team Overview</a></li>
+                                                                                </ul>
+                                                                                <ul class="rd-megamenu-list">
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="schedule.html">Schedule</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="news.html">News</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="blog-post.html">Blog post</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="gallery.html">Gallery</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="latest-game-results.html">Latest game results</a></li>
+                                                                                  <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="standings.html">Standings</a></li>
+                                                                                </ul>
+                                                                              </div>
+                                                                            </div>
+                                                          <div class="rd-megamenu-item rd-megamenu-item-content">
+                                                            <!-- Heading Component-->
+                                                            <article class="heading-component heading-component-simple">
+                                                              <div class="heading-component-inner">
+                                                                <h5 class="heading-component-title">Latest News
+                                                                </h5><a class="button button-xs button-gray-outline" href="news.html">See all News</a>
+                                                              </div>
+                                                            </article>
 
-</nav>
-<!-- End of Topbar -->
+                                                            <div class="row row-20">
+                                                              <div class="col-lg-6">
+                                                                      <!-- Post Classic-->
+                                                                      <article class="post-classic">
+                                                                        <div class="post-classic-aside"><a class="post-classic-figure" href="blog-post.html"><img src="images/megamenu-post-1-93x94.jpg" alt="" width="93" height="94"></a></div>
+                                                                        <div class="post-classic-main">
+                                                                          <!-- Badge-->
+                                                                          <div class="badge badge-secondary">Sports
+                                                                          </div>
+                                                                          <p class="post-classic-title"><a href="blog-post.html">Prem in 90 seconds: Chelsea's crisis is over!</a></p>
+                                                                          <div class="post-classic-time"><span class="icon mdi mdi-clock"></span>
+                                                                            <time datetime="2020">April 15, 2020</time>
+                                                                          </div>
+                                                                        </div>
+                                                                      </article>
+                                                              </div>
+                                                              <div class="col-lg-6">
+                                                                      <!-- Post Classic-->
+                                                                      <article class="post-classic">
+                                                                        <div class="post-classic-aside"><a class="post-classic-figure" href="blog-post.html"><img src="images/megamenu-post-2-93x94.jpg" alt="" width="93" height="94"></a></div>
+                                                                        <div class="post-classic-main">
+                                                                          <!-- Badge-->
+                                                                          <div class="badge badge-primary">News
+                                                                          </div>
+                                                                          <p class="post-classic-title"><a href="blog-post.html">Raptors GM excited about Monroe signing</a></p>
+                                                                          <div class="post-classic-time"><span class="icon mdi mdi-clock"></span>
+                                                                            <time datetime="2020">April 15, 2020</time>
+                                                                          </div>
+                                                                        </div>
+                                                                      </article>
+                                                              </div>
+                                                              <div class="col-lg-6">
+                                                                      <!-- Post Classic-->
+                                                                      <article class="post-classic">
+                                                                        <div class="post-classic-aside"><a class="post-classic-figure" href="blog-post.html"><img src="images/megamenu-post-3-93x94.jpg" alt="" width="93" height="94"></a></div>
+                                                                        <div class="post-classic-main">
+                                                                          <!-- Badge-->
+                                                                          <div class="badge badge-primary">News
+                                                                          </div>
+                                                                          <p class="post-classic-title"><a href="blog-post.html">Lester regains form with 6 scoreless, 8 K’s</a></p>
+                                                                          <div class="post-classic-time"><span class="icon mdi mdi-clock"></span>
+                                                                            <time datetime="2020">April 15, 2020</time>
+                                                                          </div>
+                                                                        </div>
+                                                                      </article>
+                                                              </div>
+                                                              <div class="col-lg-6">
+                                                                      <!-- Post Classic-->
+                                                                      <article class="post-classic">
+                                                                        <div class="post-classic-aside"><a class="post-classic-figure" href="blog-post.html"><img src="images/megamenu-post-4-93x94.jpg" alt="" width="93" height="94"></a></div>
+                                                                        <div class="post-classic-main">
+                                                                          <!-- Badge-->
+                                                                          <div class="badge badge-primary">News
+                                                                          </div>
+                                                                          <p class="post-classic-title"><a href="blog-post.html">Next gen stars making a surge in the new season</a></p>
+                                                                          <div class="post-classic-time"><span class="icon mdi mdi-clock"></span>
+                                                                            <time datetime="2020">April 15, 2020</time>
+                                                                          </div>
+                                                                        </div>
+                                                                      </article>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                                          <!-- Event Teaser-->
+                                                                          <article class="event-teaser rd-megamenu-footer">
+                                                                            <div class="event-teaser-header">
+                                                                              <div class="event-teaser-caption">
+                                                                                <h5 class="event-teaser-title">European League 2020</h5>
+                                                                                <time class="event-teaser-time" datetime="2020">Saturday, April 14, 2020</time>
+                                                                              </div>
+                                                                              <div class="event-teaser-teams">
+                                                                                <div class="event-teaser-team">
+                                                                                  <div class="unit unit-spacing-xs unit-horizontal align-items-center">
+                                                                                    <div class="unit-left"><img src="images/team-bavaria-fc-59x54.png" alt="" width="59" height="54">
+                                                                                    </div>
+                                                                                    <div class="unit-body">
+                                                                                      <p class="heading-7">Bavaria</p>
+                                                                                      <p class="text-style-1">Germany</p>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="event-teaser-team-divider"><span class="event-teaser-team-divider-text">VS</span></div>
+                                                                                <div class="event-teaser-team">
+                                                                                  <div class="unit unit-spacing-xs unit-horizontal align-items-center">
+                                                                                    <div class="unit-left"><img src="images/team-atletico-50x50.png" alt="" width="50" height="50">
+                                                                                    </div>
+                                                                                    <div class="unit-body">
+                                                                                      <p class="heading-7">Atletico</p>
+                                                                                      <p class="text-style-1">USA</p>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                            <div class="event-teaser-countdown event-teaser-highlighted">
+                                                                              <!-- Countdown-->
+                                                                              <div class="countdown countdown-classic is-countdown" data-type="until" data-time="31 Dec 2020 16:00" data-format="dhms" data-style="short"><span class="countdown-row countdown-show0"></span></div>
+                                                                            </div>
+                                                                            <div class="event-teaser-aside"><a class="event-teaser-link" href="#">Place a Bet</a></div>
+                                                                          </article>
+                                                      </article>
+                </li>
+                <li class="rd-nav-item"><a class="rd-nav-link" href="contact-us.html">Contact us</a>
+                </li>
+              </ul>
+              <div class="rd-navbar-main-element">
+                <ul class="list-inline list-inline-sm">
+                  <li><a class="icon icon-xs fa fa-facebook" href="#"></a></li>
+                  <li><a class="icon icon-xs fa fa-twitter" href="#"></a></li>
+                  <li><a class="icon icon-xs fa fa-google-plus" href="#"></a></li>
+                  <li><a class="icon icon-xs fa fa-instagram" href="#"></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
