@@ -7,8 +7,9 @@ import { ServiceModule } from '../services/service.module';
 // Rutas
 import { PagesRouteModule } from './pages.routes';
 
-// import { TabModule } from 'angular-tabs-component';
+import { TabModule } from 'angular-tabs-component';
 import { FormsModule } from '@angular/forms';
+
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -45,6 +46,7 @@ import { TopBasketComponent } from './top-basket/top-basket.component';
     SharedModule,
     ServiceModule,
     FormsModule,
+    TabModule,
   ]
 })
 export class PagesModule { }

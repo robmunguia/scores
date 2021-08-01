@@ -1,0 +1,20 @@
+.margin {
+    margin: 5px;
+}
+
+.odds {
+    color: #31A80E;
+}
+
+.col-center {
+    float: none;
+    margin: auto;
+}
+
+.rigt-panel {
+    text-align: right;
+}
+
+.loader {
+    font-size: 5rem;
+}

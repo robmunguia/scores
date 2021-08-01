@@ -73,7 +73,7 @@ export class FilterCountryComponent implements OnInit {
     this.games.forEach(item => {
       BasketUtil.getLastGames( item.home_team_key, true, item, this.monthGames, this.dateGames, this.divider );
       BasketUtil.getLastGames( item.away_team_key, false, item, this.monthGames, this.dateGames, this.divider );
-      this.getOdds( item.event_key );
+      //this.getOdds( item.event_key );
     });
   }
 
